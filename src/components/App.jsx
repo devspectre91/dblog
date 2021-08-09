@@ -5,6 +5,7 @@ import Articles from './Articles';
 import Register from './Register';
 import Header from './Header';
 import Footer from './Footer';
+import Home from './Home';
 
 
 
@@ -16,17 +17,22 @@ class App extends React.Component {
   render() {
     return <>
       <Header />
-      <Switch>
+ <div className='container'>
+ <Switch>
         <Route path='/login'>
           <Login></Login>
         </Route>
         <Route path='/register'>
           <Register></Register>
         </Route>
-        <Route path='/'>
+        <Route path='/articles'>
           <Articles></Articles>
         </Route>
+        <Route path='/'>
+          <Home />
+        </Route>
       </Switch>
+ </div>
       <Footer /> 
        </>;
   }

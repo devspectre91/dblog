@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bulma/css/bulma.min.css';
 import App from './components/App';
 import './index.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import {
     BrowserRouter as Router,
     Switch,

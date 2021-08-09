@@ -2,14 +2,44 @@ import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+        
+    }
+
+    componentDidMount(){
+      
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+  
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+       console.log("clicked")
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+  
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+  
+        });
+      });
+    }
+
+    }
   render() {
     return (
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          Dblog
+      <nav className="navbar is-black px-6 py-2" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
+         <div className='navbar-item  is-size-4 has-text-weight-bold'> <Link to='/' className='has-text-light'> Dblog </Link></div>
           <Link
             role="button"
-            class="navbar-burger"
+            className="navbar-burger"
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -20,18 +50,18 @@ class Header extends Component {
           </Link>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <Link class="navbar-item">Home</Link>
+        {/* <div id="navbarBasicExample" className="navbar-menu">
+          <div className="navbar-start">
+            <Link to='/' className="navbar-item py-4">Home</Link>
           </div>
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <Link class="button is-primary">
+        </div> */}
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons is-centered ">
+              <Link to='/login' className="button is-dark mr-4">
                 <strong>Sign up</strong>
               </Link>
-              <Link class="button is-light">Log in</Link>
+              <Link to='/signup' className="button is-light ">Log in</Link>
             </div>
           </div>
         </div>
