@@ -34,7 +34,7 @@ class Header extends Component {
     }
   render() {
     return (
-      <nav className="navbar is-black px-6 py-2" role="navigation" aria-label="main navigation">
+      <nav className="navbar px-6 py-2" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
          <div className='navbar-item  is-size-4 has-text-weight-bold'> <Link to='/' className='has-text-light'> Dblog </Link></div>
           <Link
@@ -58,10 +58,10 @@ class Header extends Component {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons is-centered ">
-              <Link to='/login' className="button is-dark mr-4">
+              <Link to='/register' className="button is-dark mr-4">
                 <strong>Sign up</strong>
               </Link>
-              <Link to='/signup' className="button is-light ">Log in</Link>
+              <Link to='/login' className="button is-light ">Log in</Link>
             </div>
           </div>
         </div>

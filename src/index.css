@@ -15,4 +15,27 @@ left: 10px;
     right: 10px;
     bottom:10px
 }
+.navbar{
+    background-color: #1C2128;
+}
+#root{
+    min-height: 100vh;
+}
+.footer{
 
+     background-color: #1C2128;
+    width: 100%;
+}
+.articles-loading{
+    margin-bottom: 20.7rem;
+}
+
+.feed-button{
+    margin-bottom: 7.4rem;
+    margin-top: 6rem;
+ 
+}
+
+.tag-box{
+    min-height: 200px;
+}
