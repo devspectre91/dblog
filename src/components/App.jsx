@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import Home from "./Home";
 import Article from "./Article";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,13 +31,13 @@ class App extends React.Component {
               <Register></Register>
             </div>
           </Route>
-
+          <Route path="/articles/tags/:tag" component={Articles} />
           <Route path="/articles/:slug" component={Article} />
 
           <Route path="/articles">
-            <div className="container">
-              <Articles></Articles>
-            </div>
+           
+              <Articles />
+   
           </Route>
 
           <Route path="/">

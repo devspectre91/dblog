@@ -6,13 +6,12 @@ class Articles extends Component {
     this.state = {
       articles: null,
       noOfPages: 1,
-      tags:null,
-      currentTag:null
+      currentTag: null,
     };
   }
 
- async componentDidMount() {
-  await  fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)
+  async componentDidMount() {
+  await fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles?limit=5`)
       .then((data) => {
         return data.json();
       })
@@ -30,12 +29,11 @@ class Articles extends Component {
         });
       });
 
-     await fetch(`https://mighty-oasis-08080.herokuapp.com/api/tags`)
+    await fetch(`https://mighty-oasis-08080.herokuapp.com/api/tags`)
       .then((data) => {
         return data.json();
       })
       .then((data) => {
-        
         return data.tags;
       })
       .then((data) => {
@@ -45,8 +43,58 @@ class Articles extends Component {
       });
   }
 
+  handleClick = (e) => {
+    if(e.target.dataset.ready==='reset'){
+     console.log("if")
+        fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          console.log(data.articles.length);
+          return data.articles;
+        })
+        .then((data) => {
+          this.setState({
+            articles: data,
+            currentTag:null,
+            noOfPages:
+              data.length % 10 === 0
+                ? Math.floor(data.length / 10)
+                : Math.floor(data.length / 10) + 1,
+          });
+        });
+   
+     
+    } else{
+     console.log("else")
+    fetch(
+      `https://mighty-oasis-08080.herokuapp.com/api/articles?tag=${e.target.dataset.id}`
+    )
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log(data.articles.length);
+        return data.articles;
+      })
+      .then((data) => {
+        this.setState({
+          articles: data,
+          noOfPages:
+            data.length % 10 === 0
+              ? Math.floor(data.length / 10)
+              : Math.floor(data.length / 10) + 1,
+          currentTag: e.target.dataset.id,
+        });
+      });
+  }};
+
   getPages = () => {
     let pages = [];
+    if(this.state.noOfPages===1){
+      return null
+    }
     for (let i = 0; i < this.state.noOfPages; i++) {
       pages.push(
         <li>
@@ -65,22 +113,26 @@ class Articles extends Component {
   };
   render() {
     return (
-      <>
+      <div className="container">
         <nav class="breadcrumb py-2 mt-4" aria-label="breadcrumbs">
           <ul>
             <li>
-              <NavLink
-                activeClassName="has-text-dark"
-                className="has-text-black"
-                to="/articles"
-                exact
-              >
+              <Link className="has-text-success" to={`/articles`} >
                 <span class="icon is-small">
                   <i class="fas fa-book" aria-hidden="true"></i>
                 </span>
-                <span>Global Feed</span>
-              </NavLink>
+                <span data-ready='reset' onClick={this.handleClick}>Global Feed</span>
+              </Link>
             </li>
+            {this.state.currentTag ? (
+              <li>
+                <Link className="has-text-success" to={`/articles/tags/${this.state.currentTag}`}>
+                  <span>#{this.state.currentTag}</span>
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </nav>
 
@@ -124,20 +176,34 @@ class Articles extends Component {
               </nav>
             </div>{" "}
             <div className="column pl-6 pt-2 is-4">
-              <div className=" tag-box box  has-background-light">{
-                this.state.tags? <div className="tags">
-                  {this.state.tags.map(tag=>{
-                    return <div className="tag is-dark">{tag}</div>
-                  })}
-                </div>:'Loading...'
-              }</div>
-              
+              <div className=" tag-box box  has-background-light">
+                {this.state.tags ? (
+                  <div className="tags">
+                    {this.state.tags.map((tag) => {
+                      return (
+                        <NavLink
+                          className="tag is-dark"
+                          data-id={tag}
+                          activeClassName="tag is-danger"
+                          to={`/articles/tags/${tag}`}
+                          onClick={this.handleClick}
+                        >
+                          {" "}
+                          {tag}
+                        </NavLink>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  "Loading..."
+                )}
+              </div>
             </div>
           </div>
         ) : (
           <div className="articles-loading"> "Loading..."</div>
         )}
-      </>
+      </div>
     );
   }
 }
