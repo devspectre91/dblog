@@ -80,6 +80,7 @@ class Register extends Component {
     } else if (e.target.name === "username") {
       this.setState({
         username: e.target.value,
+        usernameError:""
       });
     } else {
       this.setState(
@@ -128,6 +129,10 @@ class Register extends Component {
                 this.setState({
                   emailError: res.errors.email,
                   usernameError: res.errors.username,
+                  status:null
+                },
+                () => {
+                  this.props.history.push("/register");
                 });
               } else if ("user" in res) {
                 localStorage.setItem("userInfo", res.user.token);
@@ -139,7 +144,7 @@ class Register extends Component {
                     passwordError: "",
                   },
                   () => {
-                    this.props.history.push("/");
+                    this.props.history.push("/login");
                   }
                 );
               }
