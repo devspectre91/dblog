@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 class Home extends Component {
     render() {
@@ -9,7 +9,7 @@ class Home extends Component {
                     <div className="is-size-1 has-text-black has-text-weight-bold mt-6">Welcome to <span className='has-text-danger-dark'>Dblog!</span></div>
                     <div className="is-size-3 has-text-dark">Browse articles by amazing authors or publish one.</div>
 
-                    <Link to='/articles' exact> <div className="button is-dark feed-button">Articles Feed</div></Link>
+                    <Link to='/articles' > <div className="button is-dark feed-button">Articles Feed</div></Link>
                
             </div>
 

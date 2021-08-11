@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link, NavLink } from "react-router-dom";
+import {Link, NavLink } from "react-router-dom";
 class Articles extends Component {
   constructor(props) {
     super(props);
@@ -7,11 +7,15 @@ class Articles extends Component {
       articles: null,
       noOfPages: 1,
       currentTag: null,
+      tags: null,
+      currentPage: 1,
     };
   }
 
   async componentDidMount() {
-  await fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles?limit=5`)
+    await fetch(
+      `https://mighty-oasis-08080.herokuapp.com/api/articles?limit=10`
+    )
       .then((data) => {
         return data.json();
       })
@@ -22,13 +26,27 @@ class Articles extends Component {
       .then((data) => {
         this.setState({
           articles: data,
-          noOfPages:
-            data.length % 10 === 0
-              ? Math.floor(data.length / 10)
-              : Math.floor(data.length / 10) + 1,
         });
       });
 
+    await fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        return data.articles;
+      })
+      .then((data) => {
+        console.log(Math.floor(data.length / 10));
+        let pages =
+          data.length % 10 === 0
+            ? Math.floor(data.length / 10)
+            : Math.floor(data.length / 10) + 1;
+
+        this.setState({
+          noOfPages: pages,
+        });
+      });
     await fetch(`https://mighty-oasis-08080.herokuapp.com/api/tags`)
       .then((data) => {
         return data.json();
@@ -44,9 +62,50 @@ class Articles extends Component {
   }
 
   handleClick = (e) => {
-    if(e.target.dataset.ready==='reset'){
-     console.log("if")
-        fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)
+    if (e.target.dataset.id === "reset") {
+      console.log("if");
+      fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles?limit=10`)
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          console.log(data.articles.length);
+          return data.articles;
+        })
+        .then((data) => {
+          this.setState(
+            {
+              articles: data,
+            },
+            () => {
+              fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)
+                .then((data) => {
+                  return data.json();
+                })
+                .then((data) => {
+                  return data.articles;
+                })
+                .then((data) => {
+                  console.log(Math.floor(data.length / 10));
+                  let pages =
+                    data.length % 10 === 0
+                      ? Math.floor(data.length / 10)
+                      : Math.floor(data.length / 10) + 1;
+
+                  this.setState({
+                    noOfPages: pages,
+                  });
+                });
+            }
+          );
+        });
+    } else if (e.target.dataset.id === "page") {
+      console.log(e.target.innerText);
+      fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles?limit=10&&offset=${
+          (Number(e.target.innerText) - 1) * 10
+        }`
+      )
         .then((data) => {
           return data.json();
         })
@@ -57,55 +116,53 @@ class Articles extends Component {
         .then((data) => {
           this.setState({
             articles: data,
-            currentTag:null,
+            currentPage: e.target.innerText,
+          });
+        });
+    } else {
+      console.log("else");
+      fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles?tag=${e.target.dataset.id}`
+      )
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          console.log(data.articles.length);
+          return data.articles;
+        })
+        .then((data) => {
+          this.setState({
+            articles: data,
             noOfPages:
               data.length % 10 === 0
                 ? Math.floor(data.length / 10)
                 : Math.floor(data.length / 10) + 1,
+            currentTag: e.target.dataset.id,
           });
         });
-   
-     
-    } else{
-     console.log("else")
-    fetch(
-      `https://mighty-oasis-08080.herokuapp.com/api/articles?tag=${e.target.dataset.id}`
-    )
-      .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        console.log(data.articles.length);
-        return data.articles;
-      })
-      .then((data) => {
-        this.setState({
-          articles: data,
-          noOfPages:
-            data.length % 10 === 0
-              ? Math.floor(data.length / 10)
-              : Math.floor(data.length / 10) + 1,
-          currentTag: e.target.dataset.id,
-        });
-      });
-  }};
+    }
+  };
 
   getPages = () => {
     let pages = [];
-    if(this.state.noOfPages===1){
-      return null
+    if (this.state.noOfPages === 1) {
+      return null;
     }
-    for (let i = 0; i < this.state.noOfPages; i++) {
+    for (let i = 1; i <= this.state.noOfPages; i++) {
       pages.push(
         <li>
-          <NavLink
-            to="/articles"
-            className="pagination-link"
-            activeClassName="pagination-link is-current has-background-dark"
-            aria-label="Goto page 1"
+          <div
+            data-id="page"
+            className={
+              this.state.currentPage == i
+                ? "pagination-link has-background-dark has-text-white"
+                : "pagination-link has-background-light"
+            }
+            onClick={this.handleClick}
           >
-            {i + 1}
-          </NavLink>
+            {i}
+          </div>
         </li>
       );
     }
@@ -117,16 +174,21 @@ class Articles extends Component {
         <nav class="breadcrumb py-2 mt-4" aria-label="breadcrumbs">
           <ul>
             <li>
-              <Link className="has-text-success" to={`/articles`} >
+              <Link className="has-text-success" to={`/articles`}>
                 <span class="icon is-small">
                   <i class="fas fa-book" aria-hidden="true"></i>
                 </span>
-                <span data-ready='reset' onClick={this.handleClick}>Global Feed</span>
+                <span data-id="reset" onClick={this.handleClick}>
+                  Global Feed
+                </span>
               </Link>
             </li>
             {this.state.currentTag ? (
               <li>
-                <Link className="has-text-success" to={`/articles/tags/${this.state.currentTag}`}>
+                <Link
+                  className="has-text-success"
+                  to={`/articles/tags/${this.state.currentTag}`}
+                >
                   <span>#{this.state.currentTag}</span>
                 </Link>
               </li>
@@ -141,7 +203,7 @@ class Articles extends Component {
             <div className="p-2 column is-8  ">
               {this.state.articles.map((article) => {
                 return (
-                  <div className="box  px-4 mb-6 has-background-light">
+                  <div key={article.slug} className="box  px-4 mb-6 has-background-light">
                     <div className="is-size-4 has-text-dark has-text-weight-bold py-5">
                       {article.title}
                     </div>
@@ -181,7 +243,7 @@ class Articles extends Component {
                   <div className="tags">
                     {this.state.tags.map((tag) => {
                       return (
-                        <NavLink
+                        <NavLink key={tag}
                           className="tag is-dark"
                           data-id={tag}
                           activeClassName="tag is-danger"

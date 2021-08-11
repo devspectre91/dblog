@@ -40,6 +40,7 @@ class Article extends Component {
                     <img
                       className="is-rounded"
                       src={this.state.article.author.image}
+                      alt='profile'
                     />
                   ) : (
                     "not found"

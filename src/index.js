@@ -6,9 +6,7 @@ import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
+   
   } from "react-router-dom";
 
 

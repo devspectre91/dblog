@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import Articles from "./Articles";
 import Register from "./Register";
@@ -8,12 +8,7 @@ import Footer from "./Footer";
 import Home from "./Home";
 import Article from "./Article";
 
-
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>
@@ -22,11 +17,10 @@ class App extends React.Component {
         <Switch>
           <Route path="/login">
             <div className="container">
-              <Login></Login>{" "}
+              <Login></Login>
             </div>
           </Route>
           <Route path="/register">
-            {" "}
             <div className="container">
               <Register></Register>
             </div>
@@ -35,9 +29,7 @@ class App extends React.Component {
           <Route path="/articles/:slug" component={Article} />
 
           <Route path="/articles">
-           
-              <Articles />
-   
+            <Articles />
           </Route>
 
           <Route path="/">

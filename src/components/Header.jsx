@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
+
 
     componentDidMount(){
       
@@ -37,9 +34,9 @@ class Header extends Component {
       <nav className="navbar px-6 py-2" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
          <div className='navbar-item  is-size-4 has-text-weight-bold'> <Link to='/' className='has-text-light'> Dblog </Link></div>
-          <Link
+          <div
             role="button"
-            className="navbar-burger"
+            className="navbar-burger has-text-white"
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
@@ -47,7 +44,7 @@ class Header extends Component {
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </Link>
+          </div>
         </div>
 
         {/* <div id="navbarBasicExample" className="navbar-menu">
