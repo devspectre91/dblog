@@ -24,49 +24,42 @@ class Article extends Component {
     return (
       <>
         <div className="hero is-dark is-small py-6">
-          <div className="hero-body mx-6">
-            <div className="is-size-1">
-              {this.state.article ? this.state.article.title : "not found"}
-            </div>
-           
-               <div className="subtitle has-text-warning">  {this.state.article
-                    ? this.state.article.description
-                    : "not found"}</div>
-     
-            <div className="level">
-              <div className="level-left">
-                <figure class="image is-48x48 ">
-                  {this.state.article ? (
+          {this.state.article ? (
+            <div className="hero-body mx-6">
+              <div className="is-size-1">{this.state.article.title}</div>
+
+              <div className="subtitle has-text-warning">
+                {" "}
+                {this.state.article.description}
+              </div>
+
+              <div className="level">
+                <div className="level-left">
+                  <figure class="image is-48x48 ">
                     <img
                       className="is-rounded"
                       src={this.state.article.author.image}
-                      alt='profile'
+                      alt="profile"
                     />
-                  ) : (
-                    "not found"
-                  )}
-                </figure>
-                <span className="ml-4">
-                  {" "}
-                  {this.state.article
-                    ? this.state.article.author.username
-                    : "not found"}
-                </span>
-                <span className="ml-4">
-                  {this.state.article
-                    ? `${this.state.article.createdAt.split("T")[0]} `
-                    : "not found"}
-                </span>
+                  </figure>
+                  <span className="ml-4">
+                    {this.state.article.author.username}
+                  </span>
+                  <span className="ml-4">
+                    {`${this.state.article.createdAt.split("T")[0]}`}
+                  </span>
+                </div>
               </div>
             </div>
+          ) : (
+            "Loading..."
+          )}
+        </div>
+        <div className="mx-6 py-6  px-6 ">
+          <div className="is-size-5 has-text-justified article-body">
+            {this.state.article ? this.state.article.body : <div className="articles-loading"> "Loading..."</div>}
           </div>
         </div>
-       <div className='mx-6 py-6  px-4 '>
-       <div className="is-size-5 has-text-justified article-body">{this.state.article
-                    ? this.state.article.body
-                    : "not found"}</div>
-       </div>
-    
       </>
     );
   }
