@@ -31,9 +31,9 @@ class Header extends Component {
     }
   render() {
     return (
-      <nav className="navbar px-6 py-2" role="navigation" aria-label="main navigation">
+      <nav className="navbar is-light px-6 py-1" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-         <div className='navbar-item  is-size-4 has-text-weight-bold'> <Link to='/' className='has-text-light'> Dblog </Link></div>
+         <div className='navbar-item '> <Link to='/' className='has-text-dark brand'> Dblog !</Link></div>
           <div
             role="button"
             className="navbar-burger has-text-white"
@@ -58,7 +58,7 @@ class Header extends Component {
               <Link to='/register' className="button is-dark mr-4">
                 <strong>Sign up</strong>
               </Link>
-              <Link to='/login' className="button is-light ">Log in</Link>
+              <Link to='/login' className="button   ">Log in</Link>
             </div>
           </div>
         </div>

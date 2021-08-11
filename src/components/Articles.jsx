@@ -76,6 +76,7 @@ class Articles extends Component {
           this.setState(
             {
               articles: data,
+              currentTag:''
             },
             () => {
               fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles`)

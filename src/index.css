@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Freckle+Face&family=Slackey&family=Tourney:wght@100&display=swap');
+
+.brand{
+    font-family: 'Slackey', cursive;
+    font-size: 2rem;
+}
+.brand:hover{
+    letter-spacing: 2px;
+   
+}
 a{
     color: black;
 }
@@ -15,9 +25,7 @@ left: 10px;
     right: 10px;
     bottom:10px
 }
-.navbar{
-    background-color: #1C2128;
-}
+
 #root{
     min-height: 100vh;
 }
@@ -31,11 +39,63 @@ left: 10px;
 }
 
 .feed-button{
-    margin-bottom: 7.4rem;
-    margin-top: 6rem;
- 
+   margin: 3rem 0;
 }
 
 .tag-box{
     min-height: 200px;
+}
+
+/* Animated Circles CSS */
+
+.circles {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+.circles li {
+	position: absolute;
+	display: block;
+	list-style: none;
+
+	animation: animate 10s linear infinite;
+
+}
+
+
+
+.circles li:nth-child(1) {
+	left: 40%;
+    top: 32vh;
+	width: 40px;
+	height: 40px;
+	animation-delay: 0s;
+	animation-duration: 10s;
+
+}
+
+
+.pagination-link{
+    cursor: pointer;
+}
+
+
+
+@keyframes animate {
+	0% {
+		transform: translateY(0) rotate(50deg) ;
+		opacity: 0;
+	}
+	50% {
+		transform: translateX(20vh) rotate(50deg);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(40vh) rotate(50deg) ;
+		opacity: 0;
+	}
 }

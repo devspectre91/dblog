@@ -33,12 +33,12 @@ class App extends React.Component {
           </Route>
 
           <Route path="/">
-            <div className="container">
+            
               <Home />
-            </div>
+           
           </Route>
         </Switch>
-      <Footer/>
+
       
       </>
     );

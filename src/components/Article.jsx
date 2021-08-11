@@ -28,7 +28,7 @@ class Article extends Component {
             <div className="hero-body mx-6">
               <div className="is-size-1">{this.state.article.title}</div>
 
-              <div className="subtitle has-text-warning">
+              <div className="subtitle has-text-success">
                 {" "}
                 {this.state.article.description}
               </div>
