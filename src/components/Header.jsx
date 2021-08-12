@@ -62,7 +62,7 @@ class Header extends Component {
                       alt="profile"
                     />
                   </figure> */}
-    <div className="navbar-item has-text-weight-bold is-capitalized">{this.props.userInfo.username}</div>
+    <div className="navbar-item  is-size-5 is-capitalized"><Link className='has-text-weight-bold has-text-success-dark' to='dashboard'> {this.props.userInfo.username}</Link></div>
           <div className="navbar-item">
             <div className="buttons is-centered ">
               <Link to='/settings' className="button is-dark mr-4">

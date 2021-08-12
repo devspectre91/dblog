@@ -38,23 +38,25 @@ class App extends React.Component {
         <Switch>
           <Route path="/login">
             <div className="container">
-              <Login logIn={this.logIn} ></Login>
+              <Login userInfo={this.state.userInfo}  logIn={this.logIn} ></Login>
             </div>
           </Route>
           <Route path="/register">
             <div className="container">
-              <Register ></Register>
+              <Register userInfo={this.state.userInfo} ></Register>
             </div>
           </Route>
-          <Route path="/articles/tags/:tag" component={Articles} />
-          <Route path="/articles/:slug" component={Article} />
+
+          {/* passing props as render props */}
+          <Route path="/articles/tags/:tag" render={(props) => <Articles userInfo={this.state.userInfo} {...props}/>} />
+          <Route path="/articles/:slug"  render={(props) => <Article userInfo={this.state.userInfo} {...props}/>}/>
 
           <Route path="/articles">
-            <Articles />
+            <Articles userInfo={this.state.userInfo}/>
           </Route>
 
           <Route path="/dashboard">
-            <Dashboard />
+            <Dashboard userInfo={this.state.userInfo}/>
           </Route>
 
           <Route path="/">

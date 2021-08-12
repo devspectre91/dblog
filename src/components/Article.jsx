@@ -8,6 +8,7 @@ class Article extends Component {
     };
   }
   componentDidMount() {
+    console.log(this.props)
     fetch(
       `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}`
     )

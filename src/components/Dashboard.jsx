@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 class Dashboard extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        );
+  componentDidMount() {
+    if (this.props.userInfo) {
+      this.props.history.push("/dashboard");
     }
+  }
+
+  render() {
+    return <div></div>;
+  }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
