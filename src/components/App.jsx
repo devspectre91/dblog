@@ -4,11 +4,26 @@ import Login from "./Login";
 import Articles from "./Articles";
 import Register from "./Register";
 import Header from "./Header";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 import Home from "./Home";
 import Article from "./Article";
+import Dashboard from "./Dashboard";
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state={
+      userInfo:null
+    }
+  }
+  
+   logIn=(user)=>{
+  this.setState({
+    userInfo:user
+  })
+   }
+
   render() {
     return (
       <>
@@ -17,12 +32,12 @@ class App extends React.Component {
         <Switch>
           <Route path="/login">
             <div className="container">
-              <Login></Login>
+              <Login logIn={this.logIn}></Login>
             </div>
           </Route>
           <Route path="/register">
             <div className="container">
-              <Register></Register>
+              <Register ></Register>
             </div>
           </Route>
           <Route path="/articles/tags/:tag" component={Articles} />
@@ -30,6 +45,10 @@ class App extends React.Component {
 
           <Route path="/articles">
             <Articles />
+          </Route>
+
+          <Route path="/dashboard">
+            <Dashboard />
           </Route>
 
           <Route path="/">

@@ -136,7 +136,7 @@ class Register extends Component {
                 });
               } else if ("user" in res) {
                 localStorage.setItem("userInfo", res.user.token);
-
+                   this.props.logIn(res.user)
                 this.setState(
                   {
                     emailError: "",
@@ -161,7 +161,7 @@ class Register extends Component {
         {this.state.status === "loading" ? (
          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark"> "Creating User..."</div>
         ) : (
-          <div className="box m-6 py-5 pb-6 px-4 column is-half ">
+          <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">
             <div className="title has-text-centered my-1">Sign Up</div>
             <Link to="/login">
               <div className="has-text-centered mb-4 has-text-success">

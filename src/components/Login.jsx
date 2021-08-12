@@ -10,15 +10,14 @@ class Login extends Component {
     this.state = {
       status: null,
       email: "",
-      emailError: "",
-      password: "",
-      passwordError: "",
+     error:'' 
     };
   }
   handleChange = (e) => {
     if (e.target.name === "email") {
       this.setState({
         email: e.target.value,
+        error:''
       });
     } else {
       this.setState({
@@ -28,7 +27,7 @@ class Login extends Component {
   };
 
   handleClick = (e) => {
-    if (!this.state.emailError && !this.state.passwordError) {
+    if (!this.state.error){
       this.setState(
         {
           status: "loading",
@@ -57,8 +56,8 @@ class Login extends Component {
               if ("errors" in res) {
                 this.setState(
                   {
-                    emailError: res.errors.email,
-                    passwordError: res.errors.password,
+                  error:`Either username or password ${res.errors['email or password']}` ,
+                  
                     status: null,
                   },
                   () => {
@@ -66,6 +65,7 @@ class Login extends Component {
                   }
                 );
               } else if ("user" in res) {
+                console.log(res)
                 localStorage.setItem("userInfo", JSON.stringify(res.user));
 
                 this.setState(
@@ -73,7 +73,7 @@ class Login extends Component {
                     emailError: "",
                     passwordError: "",
                   },
-                  () => {
+                  () => {this.props.logIn(res.user)
                     this.props.history.push("/dashboard");
                   }
                 );
@@ -94,13 +94,16 @@ class Login extends Component {
             "Logging in..."
           </div>
         ) : (
-          <div className="box m-6 py-5 pb-6 px-4 column is-half ">
+          <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">
             <div className="title has-text-centered my-1">Login</div>
             <Link to="/register">
               <div className="has-text-centered mb-4 has-text-success">
                 Need an account?
               </div>
             </Link>
+            {this.state.error ? (
+                  <div className="has-text-danger">{this.state.error}</div>
+                ) : null}
             <div class="field">
               <p class="control has-icons-left has-icons-right">
                 <input
@@ -116,9 +119,7 @@ class Login extends Component {
                 <span class="icon is-small is-right">
                   <i class="fas fa-check"></i>
                 </span>
-                {this.state.emailError ? (
-                  <div className="has-text-danger">{this.state.emailError}</div>
-                ) : null}
+              
               </p>
             </div>
             <div class="field">
@@ -133,11 +134,7 @@ class Login extends Component {
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
-                {this.state.passwordError ? (
-                  <div className="has-text-danger">
-                    {this.state.passwordError}
-                  </div>
-                ) : null}
+               
               </p>
             </div>
             <div class="field">
