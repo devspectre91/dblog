@@ -56,13 +56,13 @@ class Header extends Component {
         </div> */}
         {this.props.userInfo ? (
           <div className="navbar-end">
-            {/* <figure class="image is-48x48 mt-2 ">
+            <figure class="image is-48x48 mt-2 ">
                     <img
                       className="is-rounded"
-                      src={this.state.userInfo.image?this.state.userInfo.image:"https://bulma.io/images/placeholders/32x32.png"}
+                      src={this.props.userInfo.image?this.props.userInfo.image:"https://static.productionready.io/images/smiley-cyrus.jpg"}
                       alt="profile"
                     />
-                  </figure> */}
+                  </figure>
             <div className="navbar-item  is-size-5 is-capitalized">
               <Link
                 className="has-text-weight-bold has-text-success-dark"
@@ -74,7 +74,7 @@ class Header extends Component {
             </div>
             <div className="navbar-item">
               <div className="buttons is-centered ">
-                <Link to="/setting" className="button is-dark mr-4">
+                <Link to="/settings" className="button is-dark mr-4">
                   <i class="fas fa-user-cog"></i>
                 </Link>
                 <Link

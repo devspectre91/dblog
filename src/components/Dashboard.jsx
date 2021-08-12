@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import Articles from "./Articles";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -9,7 +10,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    return <div></div>;
+    return <Articles />;
   }
 }
 

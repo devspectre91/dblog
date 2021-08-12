@@ -9,7 +9,7 @@ import Home from "./Home";
 import Article from "./Article";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
-import Setting from "./Setting";
+import Settings from "./Settings";
 
 class App extends React.Component {
   constructor(props) {
@@ -74,8 +74,8 @@ class App extends React.Component {
           <Route path="/profile">
             <Profile userInfo={this.state.userInfo} />
           </Route>
-          <Route path="/setting">
-            <Setting userInfo={this.state.userInfo} />
+          <Route path="/settings">
+            <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
           </Route>
           <Route path="/">
             <Home userInfo={this.state.userInfo} exact/>
