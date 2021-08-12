@@ -83,7 +83,11 @@ class Login extends Component {
       );
     }
   };
-
+  componentDidMount(){
+    if(this.props.userInfo){
+     this.props.history.push("/dashboard");
+    }
+  }
   render() {
     return (
       <div className="columns is-centered py-5">

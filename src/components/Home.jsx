@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Home extends Component {
+
+  componentDidMount() {
+    if (this.props.userInfo) {
+      this.props.history.push("/dashboard");
+    }
+  }
+  
   render() {
     return (
       <>
@@ -85,4 +92,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

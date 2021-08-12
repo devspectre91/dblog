@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 
 class Dashboard extends Component {
   componentDidMount() {
-    if (this.props.userInfo) {
-      this.props.history.push("/dashboard");
+    if (!this.props.userInfo) {
+      this.props.history.push("/");
     }
   }
 

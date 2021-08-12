@@ -1,18 +1,12 @@
 import React, { Component } from "react";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
-  
-
-    componentDidMount(){
-      
-      
+  componentDidMount() {
     // // Get all "navbar-burger" elements
     // const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-  
     // // Check if there are any navbar burgers
     // if ($navbarBurgers.length > 0) {
-  
     //   // Add a click event on each of them
     //   $navbarBurgers.forEach( el => {
     //     el.addEventListener('click', () => {
@@ -20,21 +14,28 @@ class Header extends Component {
     //       // Get the target from the "data-target" attribute
     //       const target = el.dataset.target;
     //       const $target = document.getElementById(target);
-  
     //       // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
     //       el.classList.toggle('is-active');
     //       $target.classList.toggle('is-active');
-  
     //     });
     //   });
     // }
-
-    }
+  }
   render() {
     return (
-      <nav className="navbar is-light px-6 py-1" role="navigation" aria-label="main navigation">
+      <nav
+        className="navbar is-light px-6 py-1"
+        role="navigation"
+        aria-label="main navigation"
+      >
         <div className="navbar-brand">
-         <div className='navbar-item '> <Link to='/' className='has-text-dark brand'> Dblog !</Link></div>
+          <div className="navbar-item ">
+            {" "}
+            <Link to="/" className="has-text-dark brand">
+              {" "}
+              Dblog !
+            </Link>
+          </div>
           <div
             role="button"
             className="navbar-burger has-text-white"
@@ -53,34 +54,55 @@ class Header extends Component {
             <Link to='/' className="navbar-item py-4">Home</Link>
           </div>
         </div> */}
-   {this.props.userInfo?   <div className="navbar-end">
-     
-     {/* <figure class="image is-48x48 mt-2 ">
+        {this.props.userInfo ? (
+          <div className="navbar-end">
+            {/* <figure class="image is-48x48 mt-2 ">
                     <img
                       className="is-rounded"
                       src={this.state.userInfo.image?this.state.userInfo.image:"https://bulma.io/images/placeholders/32x32.png"}
                       alt="profile"
                     />
                   </figure> */}
-    <div className="navbar-item  is-size-5 is-capitalized"><Link className='has-text-weight-bold has-text-success-dark' to='dashboard'> {this.props.userInfo.username}</Link></div>
-          <div className="navbar-item">
-            <div className="buttons is-centered ">
-              <Link to='/settings' className="button is-dark mr-4">
-              <i class="fas fa-user-cog"></i>
+            <div className="navbar-item  is-size-5 is-capitalized">
+              <Link
+                className="has-text-weight-bold has-text-success-dark"
+                to="/profile"
+              >
+                {" "}
+                {this.props.userInfo.username}
               </Link>
-              <Link to='/' className="button" onClick={()=>{this.props.logOut()}}>Log out</Link>
+            </div>
+            <div className="navbar-item">
+              <div className="buttons is-centered ">
+                <Link to="/setting" className="button is-dark mr-4">
+                  <i class="fas fa-user-cog"></i>
+                </Link>
+                <Link
+                  to="/"
+                  className="button"
+                  onClick={() => {
+                    this.props.logOut();
+                  }}
+                >
+                  Log out
+                </Link>
+              </div>
             </div>
           </div>
-        </div>:    <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons is-centered ">
-              <Link to='/register' className="button is-dark mr-4">
-                <strong>Sign up</strong>
-              </Link>
-              <Link to='/login' className="button   ">Log in</Link>
+        ) : (
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons is-centered ">
+                <Link to="/register" className="button is-dark mr-4">
+                  <strong>Sign up</strong>
+                </Link>
+                <Link to="/login" className="button   ">
+                  Log in
+                </Link>
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </nav>
     );
   }
