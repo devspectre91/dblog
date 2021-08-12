@@ -136,7 +136,7 @@ class Register extends Component {
                 });
               } else if ("user" in res) {
                 localStorage.setItem("userInfo", res.user.token);
-                   this.props.logIn(res.user)
+                   
                 this.setState(
                   {
                     emailError: "",

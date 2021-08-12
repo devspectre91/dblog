@@ -2,19 +2,10 @@ import React, { Component } from "react";
 import {Link } from "react-router-dom";
 
 class Header extends Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        userInfo:null
-      }
-    }
-    
+  
 
     componentDidMount(){
-
-      this.setState({
-        userInfo: JSON.parse(localStorage.getItem('userInfo'))
-      })
+      
       
     // // Get all "navbar-burger" elements
     // const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -62,7 +53,7 @@ class Header extends Component {
             <Link to='/' className="navbar-item py-4">Home</Link>
           </div>
         </div> */}
-   {this.state.userInfo?   <div className="navbar-end">
+   {this.props.userInfo?   <div className="navbar-end">
      
      {/* <figure class="image is-48x48 mt-2 ">
                     <img
@@ -71,13 +62,13 @@ class Header extends Component {
                       alt="profile"
                     />
                   </figure> */}
-    <div className="navbar-item has-text-weight-bold is-capitalized">{this.state.userInfo.username}</div>
+    <div className="navbar-item has-text-weight-bold is-capitalized">{this.props.userInfo.username}</div>
           <div className="navbar-item">
             <div className="buttons is-centered ">
               <Link to='/settings' className="button is-dark mr-4">
               <i class="fas fa-user-cog"></i>
               </Link>
-              <Link to='/' className="button">Log out</Link>
+              <Link to='/' className="button" onClick={()=>{this.props.logOut()}}>Log out</Link>
             </div>
           </div>
         </div>:    <div className="navbar-end">

@@ -14,7 +14,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      userInfo:null
+      userInfo:JSON.parse(localStorage.getItem('userInfo'))?JSON.parse(localStorage.getItem('userInfo')):null
     }
   }
   
@@ -23,16 +23,22 @@ class App extends React.Component {
     userInfo:user
   })
    }
+   logOut=()=>{
+    localStorage.removeItem('userInfo');
+    this.setState({
+      userInfo:null
+    })
+     }
 
   render() {
     return (
       <>
-        <Header />
+        <Header userInfo={this.state.userInfo} logOut={this.logOut}/>
 
         <Switch>
           <Route path="/login">
             <div className="container">
-              <Login logIn={this.logIn}></Login>
+              <Login logIn={this.logIn} ></Login>
             </div>
           </Route>
           <Route path="/register">
