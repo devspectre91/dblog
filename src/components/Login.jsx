@@ -108,44 +108,44 @@ class Login extends Component {
             {this.state.error ? (
                   <div className="has-text-danger">{this.state.error}</div>
                 ) : null}
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
                 <input
-                  class="input"
+                  className="input"
                   type="email"
                   placeholder="Email"
                   onChange={this.handleChange}
                   name="email"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope"></i>
                 </span>
-                <span class="icon is-small is-right">
-                  <i class="fas fa-check"></i>
+                <span className="icon is-small is-right">
+                  <i className="fas fa-check"></i>
                 </span>
               
               </p>
             </div>
-            <div class="field">
-              <p class="control has-icons-left">
+            <div className="field">
+              <p className="control has-icons-left">
                 <input
-                  class="input"
+                  className="input"
                   type="password"
                   placeholder="Password"
                   onChange={this.handleChange}
                   name="password"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
                 </span>
                
               </p>
             </div>
-            <div class="field">
-              <p class="control level">
+            <div className="field">
+              <p className="control level">
                 <div className="level-left"></div>
                 <button
-                  class="button is-success level-right"
+                  className="button is-success level-right"
                   onClick={this.handleClick}
                 >
                   Login

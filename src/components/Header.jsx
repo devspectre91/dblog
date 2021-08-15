@@ -66,7 +66,9 @@ class Header extends Component {
             <div className="navbar-item  is-size-5 is-capitalized">
               <Link
                 className="has-text-weight-bold has-text-success-dark"
-                to="/profile"
+                to={`/profiles/${this.props.userInfo.username}`}
+              
+            
               >
                 {" "}
                 {this.props.userInfo.username}

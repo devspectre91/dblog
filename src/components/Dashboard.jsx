@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import Articles from "./Articles";
+import Feed from "./Feed";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    return <Articles />;
+    return <Feed maxArticles={this.props.maxArticles} userInfo={this.props.userInfo}/>;
   }
 }
 

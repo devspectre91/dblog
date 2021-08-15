@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter} from "react-router-dom";
 
 class Settings extends Component {
   constructor(props) {
@@ -127,69 +127,69 @@ console.log(this.props.userInfo.token)
           <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">
             <div className="title has-text-centered my-1 mb-4">Settings</div>
 
-            <div class="field">
-              <p class="control has-icons-left">
+            <div className="field">
+              <p className="control has-icons-left">
                 <input
-                  class="input"
+                  className="input"
                   type="text"
                   name="image"
                   value={this.state.image}
                   onChange={this.handleChange}
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-camera"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-camera"></i>
                 </span>
               </p>
             </div>
-            <div class="field">
-              <p class="control has-icons-left">
+            <div className="field">
+              <p className="control has-icons-left">
                 <input
-                  class="input"
+                  className="input"
                   type="text"
                   name="username"
                   value={this.state.username}
                   onChange={this.handleChange}
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-user"></i>
                 </span>
               </p>
             </div>
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
                 <input
-                  class="input"
+                  className="input"
                   type="email"
                   placeholder="Email"
                   name="email"
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope"></i>
                 </span>
              
               </p>
             </div>
-            <div class="field">
-              <p class="control has-icons-left">
+            <div className="field">
+              <p className="control has-icons-left">
                 <input
-                  class="input"
+                  className="input"
                   type="password"
                   name="password"
                   value={this.state.password}
                   onChange={this.handleChange}
                   placeholder="Password"
                 />
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
                 </span>
               </p>
             </div>
-            <div class="field">
-              <p class="control has-icons-left">
+            <div className="field">
+              <p className="control has-icons-left">
                 <textarea
-                  class="textarea px-4"
+                  className="textarea px-4"
                   type="textarea"
                   name="bio"
                   rows="5"
@@ -199,11 +199,11 @@ console.log(this.props.userInfo.token)
                 />
               </p>
             </div>
-            <div class="field ">
-              <p class="control level ">
+            <div className="field ">
+              <p className="control level ">
                 <div className="level-left"></div>
                 <button
-                  class="button level-right is-success"
+                  className="button level-right is-success"
                   onClick={this.handleClick}
                 >
                   Update

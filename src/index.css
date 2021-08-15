@@ -41,7 +41,9 @@ left: 10px;
 .feed-button{
    margin: 3rem 0;
 }
-
+.tag{
+	cursor: pointer;
+}
 .tag-box{
     min-height: 200px;
 }
@@ -98,4 +100,8 @@ left: 10px;
 		transform: translateX(40vh) rotate(50deg) ;
 		opacity: 0;
 	}
+}
+
+.pointer-link{
+	cursor: pointer;
 }
