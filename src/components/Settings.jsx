@@ -9,13 +9,50 @@ class Settings extends Component {
 
     this.state = {
       status: null,
-      username: this.props.userInfo.username,
-      email: this.props.userInfo.email,
-      bio: this.props.userInfo.bio,
-      image: this.props.userInfo.image,
+      username: null,
+      email: null,
+      bio: null,
+      image:null,
       password: "",
       error:null
     };
+  }
+  componentDidMount(){
+    if (!this.props.userInfo) {
+      this.props.history.push("/");
+    }else{
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.props.userInfo.token}`,
+      }
+    };
+
+    this.setState({
+        status:'loading'
+    },()=>{
+        fetch(
+            "https://mighty-oasis-08080.herokuapp.com/api/user",
+            requestOptions
+          )
+            .then((res) => {
+              return res.json();
+            })
+            .then((res) => {
+              console.log(res.user);
+              if(res.user){
+               this.setState({
+                status: null,
+                username: res.user.username,
+                email: res.user.email,
+                bio: res.user.bio,
+                image:res.user.image,
+             
+               })
+              }
+            });
+    })}
   }
   handleChange = (e) => {
     if (e.target.name === "email") {
@@ -40,11 +77,7 @@ class Settings extends Component {
       });
     }
   };
-  componentDidMount() {
-    if (!this.props.userInfo) {
-      this.props.history.push("/");
-    }
-  }
+
 
   handleClick = (e) => {
 console.log(this.props.userInfo.token)
@@ -105,7 +138,7 @@ console.log(this.props.userInfo.token)
                     error: "",
                   },
                   () => {
-                    this.props.history.push("/profile");
+                    this.props.history.push(`/profiles/${res.user.username}`);
                   }
                 );
               }
@@ -121,7 +154,7 @@ console.log(this.props.userInfo.token)
         {this.state.status === "loading" ? (
           <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
             {" "}
-            "Updating User..."
+            "Updating User Settings..."
           </div>
         ) : (
           <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">
@@ -133,7 +166,7 @@ console.log(this.props.userInfo.token)
                   className="input"
                   type="text"
                   name="image"
-                  value={this.state.image}
+                  value={this.state.image?this.state.image:this.props.userInfo.image}
                   onChange={this.handleChange}
                 />
                 <span className="icon is-small is-left">

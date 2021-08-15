@@ -56,6 +56,11 @@ class Header extends Component {
         </div> */}
         {this.props.userInfo ? (
           <div className="navbar-end">
+            <div className="navbar-item">
+            <Link to="/new" className="button is-dark mr-4">
+                  <i className="fas fa-feather-alt"></i>
+                </Link>
+            </div>
             <figure class="image is-48x48 mt-2 ">
                     <img
                       className="is-rounded"
@@ -77,7 +82,7 @@ class Header extends Component {
             <div className="navbar-item">
               <div className="buttons is-centered ">
                 <Link to="/settings" className="button is-dark mr-4">
-                  <i class="fas fa-user-cog"></i>
+                  <i className="fas fa-user-cog"></i>
                 </Link>
                 <Link
                   to="/"

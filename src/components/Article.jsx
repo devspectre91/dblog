@@ -51,9 +51,14 @@ class Article extends Component {
                   </span>
                 </div>
               </div>
+              <div className="level">
+                <div className="tags">{this.state.article.tagList.map(tag=>{
+                  return <div className="tag is-danger">{tag}</div>
+                })}</div>
+              </div>
             </div>
           ) : (
-            "Loading..."
+            <div className="articles-loading mx-6 px-6 py-6 is-size-4"> "Loading.."</div>
           )}
         </div>
         <div className="mx-6 py-6  px-6 ">

@@ -12,6 +12,7 @@ import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import NotFound from './NotFound'
+import CreateArticle from "./CreateArticle";
 
 
 
@@ -85,23 +86,24 @@ class App extends React.Component {
           <Route
             path="/articles/:slug"
             render={(props) => (
-              <Article userInfo={this.state.userInfo} {...props} />
+              <Article userInfo={this.state.userInfo} {...props}  exact/>
             )}
           />
 
-          <Route path="/articles">
+          <Route path="/articles" exact>
             <Feed
               maxArticles={this.state.maxArticles}
               userInfo={this.state.userInfo}
             />
           </Route>
 
-          <Route path="/dashboard">
+          <Route path="/dashboard" exact>
             <Dashboard
               maxArticles={this.state.maxArticles}
               userInfo={this.state.userInfo}
             />
           </Route>
+        
           <Route
             path="/profiles/:username"
             render={(props) => (
@@ -113,12 +115,18 @@ class App extends React.Component {
           <Route path="/settings" exact>
             <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
           </Route>
+
+          <Route path="/new" exact>
+            <CreateArticle
+            
+              userInfo={this.state.userInfo}
+            />
+          </Route>
+          
           <Route path="/" exact>
             <Home userInfo={this.state.userInfo} exact />
           </Route>
-          <Route path="/" exact>
-            <Home userInfo={this.state.userInfo} exact />
-          </Route>
+         
           <Route component={NotFound} />
             
          
