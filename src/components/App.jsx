@@ -13,6 +13,7 @@ import Profile from "./Profile";
 import Settings from "./Settings";
 import NotFound from './NotFound'
 import CreateArticle from "./CreateArticle";
+import EditArticle from "./EditArticle";
 
 
 
@@ -87,6 +88,12 @@ class App extends React.Component {
             path="/articles/:slug"
             render={(props) => (
               <Article userInfo={this.state.userInfo} {...props}  exact/>
+            )}
+          />
+            <Route
+            path="/article/edit/:slug"
+            render={(props) => (
+              <EditArticle userInfo={this.state.userInfo} {...props}  exact/>
             )}
           />
 

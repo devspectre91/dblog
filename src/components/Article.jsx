@@ -133,12 +133,12 @@ class Article extends Component {
                           }
                         >
                           <i
-                            className="fas fa-heart fa-2x"
+                            className="fas fa-heart "
                             data-id="heart"
                             onClick={this.handleClick}
                           ></i>
                         </span>
-                        <span className="is-size-5 mx-2">
+                        <span className="is-size-6 mx-2">
                           {" "}
                           {this.state.article.favoritesCount}
                         </span>
@@ -157,7 +157,7 @@ class Article extends Component {
                     this.props.userInfo.username ===
                       this.state.article.author.username ? (
                       <div className="level-right buttons">
-                        <Link to="/article/edit" className="button">
+                        <Link to={`/article/edit/${this.state.article.slug}`} className="button">
                           Edit
                         </Link>
                         <div
@@ -182,13 +182,13 @@ class Article extends Component {
             </div>
             <div className="mx-6 py-6  px-6 ">
               <div className="is-size-5 has-text-justified article-body">
-                {this.state.article ? (
+                {this.state.article ? 
                   this.state.article.body
-                ) : (
+                 : (
                   <div className="articles-loading"> "Loading..."</div>
                 )}
               </div>
-              )
+              
             </div>
           </>
         )}

@@ -1,21 +1,45 @@
 import React, { Component } from "react";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-class CreateArticle extends Component {
+class EditArticle extends Component {
   constructor(props) {
     super(props);
     this.state = {
       status: null,
-      taglist: [],
+      tagList:null,
       description: null,
       body: null,
-      title:null
+      title: null,
     };
   }
 
   componentDidMount() {
     if (!this.props.userInfo) {
       this.props.history.push("/");
+    } else {
+      this.setState(
+        {
+          status: "loading",
+        },
+        () => {
+          fetch(
+            `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}`
+          )
+            .then((data) => {
+              return data.json();
+            })
+            .then((data) => {
+                console.log(data.article)
+              this.setState({
+                tagList: data.article.tagList.join(),
+                description: data.article.description,
+                body: data.article.body,
+                title: data.article.title,
+                status:null
+              });
+            });
+        }
+      );
     }
   }
 
@@ -32,16 +56,16 @@ class CreateArticle extends Component {
       this.setState({
         description: e.target.value,
       });
-    } else if (e.target.name === "taglist") {
+    } else if (e.target.name === "tagList") {
       this.setState({
-        taglist: e.target.value,
+        tagList: e.target.value,
       });
     }
   };
 
   handleClick = () => {
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.userInfo.token}`,
@@ -51,29 +75,32 @@ class CreateArticle extends Component {
           title: this.state.title,
           body: this.state.body,
           description: this.state.description,
-          tagList: this.state.taglist.split(','),
+          tagList: this.state.tagList.split(','),
         },
       }),
     };
 
-    this.setState({
-        status:'loading'
-    },()=>{
+    this.setState(
+      {
+        status: "loading",
+      },
+      () => {
         fetch(
-            "https://mighty-oasis-08080.herokuapp.com/api/articles",
-            requestOptions
-          )
-            .then((res) => {
-              return res.json();
-            })
-            .then((res) => {
-              console.log(res.article);
-              if(res.article){
-                this.props.history.push(`/articles/${res.article.slug}`);
-              }
-            });
-    })
-   
+          `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}`,
+          requestOptions
+        )
+          .then((res) => {
+           
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.article) {
+              this.props.history.push(`/articles/${res.article.slug}`);
+            }
+          });
+      }
+    );
   };
 
   render() {
@@ -84,12 +111,12 @@ class CreateArticle extends Component {
           {this.state.status === "loading" ? (
             <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
               {" "}
-              "Publishing your Article..."
+              "Getting Article info..."
             </div>
           ) : (
             <div className="box m-6 py-5 pb-6 px-4 column is-three-fifths has-background-light">
               <div className="title has-text-centered my-3 mb-4">
-                Create Article
+                Edit Article
               </div>
 
               <div class="field">
@@ -120,7 +147,6 @@ class CreateArticle extends Component {
                 <p class="control ">
                   <textarea
                     class="textarea p-3"
-                  
                     name="body"
                     placeholder="Article's Body"
                     value={this.state.body}
@@ -134,8 +160,8 @@ class CreateArticle extends Component {
                     class="input p-3"
                     type="text"
                     placeholder="Tag List (comma separated) e.g. css, html, javascript"
-                    name="taglist"
-                    value={this.state.taglist}
+                    name="tagList"
+                    value={this.state.tagList}
                     onChange={this.handleChange}
                   />
                 </p>
@@ -147,7 +173,7 @@ class CreateArticle extends Component {
                     class="button level-right is-success"
                     onClick={this.handleClick}
                   >
-                    Publish
+                    Update Article
                   </button>
                 </p>
               </div>
@@ -159,4 +185,4 @@ class CreateArticle extends Component {
   }
 }
 
-export default withRouter(CreateArticle);
+export default withRouter(EditArticle);
