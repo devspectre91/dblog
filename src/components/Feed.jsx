@@ -10,7 +10,7 @@ class Feed extends Component {
       currentTag: null,
       tags: null,
       currentPage: 1,
-      breadcrumb:'feed'
+      breadcrumb: "feed",
     };
   }
 
@@ -18,10 +18,14 @@ class Feed extends Component {
     if (this.props.userInfo) {
       const requestOptions = {
         method: "GET",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${this.props.userInfo.token}` },
-     }
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.props.userInfo.token}`,
+        },
+      };
       await fetch(
-        `https://mighty-oasis-08080.herokuapp.com/api/articles/feed?limit=10`, requestOptions
+        `https://mighty-oasis-08080.herokuapp.com/api/articles/feed?limit=10`,
+        requestOptions
       )
         .then((data) => {
           return data.json();
@@ -36,7 +40,10 @@ class Feed extends Component {
           });
         });
 
-      await fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles/feed`, requestOptions)
+      await fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles/feed`,
+        requestOptions
+      )
         .then((data) => {
           return data.json();
         })
@@ -56,8 +63,7 @@ class Feed extends Component {
         });
     } else {
       console.log("else");
-  
-      
+
       await fetch(
         `https://mighty-oasis-08080.herokuapp.com/api/articles?limit=10`
       )
@@ -74,7 +80,9 @@ class Feed extends Component {
           });
         });
 
-      await fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles?limit={${this.props.maxArticles}}`)
+      await fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles?limit={${this.props.maxArticles}}`
+      )
         .then((data) => {
           return data.json();
         })
@@ -82,7 +90,7 @@ class Feed extends Component {
           return data.articles;
         })
         .then((data) => {
-          console.log( data.length);
+          console.log(data.length);
           let pages =
             data.length % 10 === 0
               ? Math.floor(data.length / 10)
@@ -109,12 +117,14 @@ class Feed extends Component {
 
   handleClick = (e) => {
     const requestOptions = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: this.props.userInfo?`Bearer ${this.props.userInfo.token}`:null,
-        },
-      };
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.props.userInfo
+          ? `Bearer ${this.props.userInfo.token}`
+          : null,
+      },
+    };
     if (e.target.dataset.id === "reset") {
       console.log("if");
       fetch(`https://mighty-oasis-08080.herokuapp.com/api/articles?limit=10`)
@@ -130,7 +140,7 @@ class Feed extends Component {
             {
               articles: data,
               currentTag: "",
-              breadcrumb:'reset'
+              breadcrumb: "reset",
             },
             () => {
               fetch(
@@ -176,51 +186,48 @@ class Feed extends Component {
             currentPage: e.target.innerText,
           });
         });
-    } 
-    else if (e.target.dataset.id === "feed") {
+    } else if (e.target.dataset.id === "feed") {
+      console.log("success");
+      fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles/feed?limit=10`,
+        requestOptions
+      )
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          console.log(data.articles);
+          return data.articles;
+        })
+        .then((data) => {
+          this.setState({
+            articles: data,
+            breadcrumb: "feed",
+          });
+        });
 
-        console.log("success")
-        fetch(
-            `https://mighty-oasis-08080.herokuapp.com/api/articles/feed?limit=10`,
-            requestOptions
-          )
-            .then((data) => {
-              return data.json();
-            })
-            .then((data) => {
-              console.log(data.articles);
-              return data.articles;
-            })
-            .then((data) => {
-              this.setState({
-                articles: data,
-                breadcrumb:'feed'
-              });
-            });
-      
-           fetch(
-            `https://mighty-oasis-08080.herokuapp.com/api/articles/feed`,
-            requestOptions
-          )
-            .then((data) => {
-              return data.json();
-            })
-            .then((data) => {
-              return data.articles;
-            })
-            .then((data) => {
-              console.log(Math.floor(data.length / 10));
-              let pages =
-                data.length % 10 === 0
-                  ? Math.floor(data.length / 10)
-                  : Math.floor(data.length / 10) + 1;
-      
-              this.setState({
-                noOfPages: pages,
-              });
-            });
-      } 
-    else {
+      fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/articles/feed`,
+        requestOptions
+      )
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          return data.articles;
+        })
+        .then((data) => {
+          console.log(Math.floor(data.length / 10));
+          let pages =
+            data.length % 10 === 0
+              ? Math.floor(data.length / 10)
+              : Math.floor(data.length / 10) + 1;
+
+          this.setState({
+            noOfPages: pages,
+          });
+        });
+    } else {
       console.log("else");
       fetch(
         `https://mighty-oasis-08080.herokuapp.com/api/articles?tag=${e.target.dataset.id}`
@@ -276,11 +283,20 @@ class Feed extends Component {
           <ul>
             {this.props.userInfo ? (
               <li>
-                <Link className={this.state.breadcrumb==='feed'?'has-text-success':'has-text-dark'} to="/dashboard">
+                <Link
+                  className={
+                    this.state.breadcrumb === "feed"
+                      ? "has-text-success"
+                      : "has-text-dark"
+                  }
+                  to="/dashboard"
+                >
                   <span class="icon is-small">
                     <i class="fas fa-book" aria-hidden="true"></i>
                   </span>
-                  <span data-id="feed" onClick={this.handleClick}>My Feed</span>
+                  <span data-id="feed" onClick={this.handleClick}>
+                    My Feed
+                  </span>
                 </Link>
               </li>
             ) : (
@@ -289,7 +305,14 @@ class Feed extends Component {
 
             {this.props.userInfo ? (
               <li>
-                <Link className={this.state.breadcrumb==='reset'?'has-text-success':'has-text-dark'}  to="/dashboard">
+                <Link
+                  className={
+                    this.state.breadcrumb === "reset"
+                      ? "has-text-success"
+                      : "has-text-dark"
+                  }
+                  to="/dashboard"
+                >
                   <span class="icon is-small">
                     <i class="fas fa-book" aria-hidden="true"></i>
                   </span>
@@ -312,10 +335,7 @@ class Feed extends Component {
             )}
             {this.state.currentTag ? (
               <li>
-                <div
-                  className="ml-4 has-text-info-dark"
-                 
-                >
+                <div className="ml-4 has-text-info-dark">
                   <span>#{this.state.currentTag}</span>
                 </div>
               </li>
@@ -350,9 +370,12 @@ class Feed extends Component {
                           <span class="tag is-dark">
                             {article.createdAt.split("T")[0]}
                           </span>
-                          <span class="tag is-danger">
+                          <Link
+                            to={`/profiles/${article.author.username}`}
+                            class="tag is-danger"
+                          >
                             {article.author.username}
-                          </span>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -361,7 +384,18 @@ class Feed extends Component {
                       <div className="button read-more is-small is-dark">
                         Read More
                       </div>
+                      
                     </Link>
+                    <div className="hearts">
+                       
+                        <span className="">
+                          <i className="fas fa-heart"></i>
+                        </span>
+                        <span className="is-size-6 has-text-weight-bold mx-1">
+                          {" "}
+                          {article.favoritesCount}
+                        </span>
+                      </div>
                   </div>
                 );
               })}

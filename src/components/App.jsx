@@ -103,7 +103,12 @@ class App extends React.Component {
               userInfo={this.state.userInfo}
             />
           </Route>
-        
+          <Route
+            path="/profiles"
+            render={(props) => (
+              <Profile userInfo={this.state.userInfo} {...props} />
+            )}
+         exact />
           <Route
             path="/profiles/:username"
             render={(props) => (

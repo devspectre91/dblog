@@ -86,7 +86,7 @@ class Header extends Component {
                 </Link>
                 <Link
                   to="/"
-                  className="button"
+                  className="button is-success"
                   onClick={() => {
                     this.props.logOut();
                   }}

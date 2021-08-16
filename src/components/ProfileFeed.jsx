@@ -177,9 +177,9 @@ class ProfileFeed extends Component {
                           <span class="tag is-dark">
                             {article.createdAt.split("T")[0]}
                           </span>
-                          <span class="tag is-danger">
+                          <Link to={`/profiles/${article.author.username}`} class="tag is-danger">
                             {article.author.username}
-                          </span>
+                          </Link>
                         </div>
                       </div>
                     </div>
