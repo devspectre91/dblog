@@ -48,32 +48,32 @@ class Profile extends Component {
       });
   }
 
-  // componentDidUpdate(prevProps){
-  //   if(this.props.match.params.username!==prevProps.match.params.userName){
-  //     fetch(
-  //       `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}`
-  //     )
-  //       .then((data) => {
-  //         if (data.statusText === "Not Found") {
-  //           console.log("error if");
-  //           this.setState({
-  //             user: null,
-  //             error: true,
-  //           });
-  //         } else {
-  //           return data.json();
-  //         }
-  //       })
-  //       .then((data) => {
-  //         if (data) {
-  //           this.setState({
-  //             user: data.profile,
+  componentDidUpdate(prevProps){
+    if(this.props.match.params.username!==prevProps.match.params.username){
+      fetch(
+        `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}`
+      )
+        .then((data) => {
+          if (data.statusText === "Not Found") {
+            console.log("error if");
+            this.setState({
+              user: null,
+              error: true,
+            });
+          } else {
+            return data.json();
+          }
+        })
+        .then((data) => {
+          if (data) {
+            this.setState({
+              user: data.profile,
           
-  //           });
-  //         }
-  //       });  
-  //   }
-  // }
+            });
+          }
+        });  
+    }
+  }
 
 
 
