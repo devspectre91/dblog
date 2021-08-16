@@ -13,19 +13,21 @@ class Profile extends Component {
   }
 
   componentDidMount() {
- console.log(this.props.match.params.username)
-    
+    console.log(this.props.match.params.username);
+
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.props.userInfo? `Bearer ${this.props.userInfo.token}`:null,
+        Authorization: this.props.userInfo
+          ? `Bearer ${this.props.userInfo.token}`
+          : null,
       },
     };
-  
 
     fetch(
-      `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}`,requestOptions
+      `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}`,
+      requestOptions
     )
       .then((data) => {
         if (data.statusText === "Not Found") {
@@ -48,8 +50,8 @@ class Profile extends Component {
       });
   }
 
-  componentDidUpdate(prevProps){
-    if(this.props.match.params.username!==prevProps.match.params.username){
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.username !== prevProps.match.params.username) {
       fetch(
         `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}`
       )
@@ -68,47 +70,51 @@ class Profile extends Component {
           if (data) {
             this.setState({
               user: data.profile,
-          
             });
           }
-        });  
+        });
     }
   }
 
-
-
-
   handleClick = (e) => {
- 
-    if(e.target.dataset.id==='follow'){
-      this.setState({
-        following:true
-      },()=>{   const requestOptions = {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.props.userInfo.token}`,
+    if (e.target.dataset.id === "follow") {
+      this.setState(
+        {
+          following: true,
         },
-      };
-      fetch(
-        `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}/follow`,
-        requestOptions
-      );})
-    }
-    else if(e.target.dataset.id==='unfollow'){
-      this.setState({
-        following:false
-      },()=>{   const requestOptions = {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.props.userInfo.token}`,
+        () => {
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.props.userInfo.token}`,
+            },
+          };
+          fetch(
+            `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}/follow`,
+            requestOptions
+          );
+        }
+      );
+    } else if (e.target.dataset.id === "unfollow") {
+      this.setState(
+        {
+          following: false,
         },
-      };
-      fetch(
-        `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}/follow`,
-        requestOptions
-      );})
+        () => {
+          const requestOptions = {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.props.userInfo.token}`,
+            },
+          };
+          fetch(
+            `https://mighty-oasis-08080.herokuapp.com/api/profiles/${this.props.match.params.username}/follow`,
+            requestOptions
+          );
+        }
+      );
     }
   };
   render() {

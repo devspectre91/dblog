@@ -10,7 +10,12 @@ class Dashboard extends Component {
   }
 
   render() {
-    return <Feed maxArticles={this.props.maxArticles} userInfo={this.props.userInfo}/>;
+    return (
+      <Feed
+        maxArticles={this.props.maxArticles}
+        userInfo={this.props.userInfo}
+      />
+    );
   }
 }
 

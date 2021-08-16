@@ -6,7 +6,7 @@ class EditArticle extends Component {
     super(props);
     this.state = {
       status: null,
-      tagList:null,
+      tagList: null,
       description: null,
       body: null,
       title: null,
@@ -29,13 +29,13 @@ class EditArticle extends Component {
               return data.json();
             })
             .then((data) => {
-                console.log(data.article)
+              console.log(data.article);
               this.setState({
                 tagList: data.article.tagList.join(),
                 description: data.article.description,
                 body: data.article.body,
                 title: data.article.title,
-                status:null
+                status: null,
               });
             });
         }
@@ -75,7 +75,7 @@ class EditArticle extends Component {
           title: this.state.title,
           body: this.state.body,
           description: this.state.description,
-          tagList: this.state.tagList.split(','),
+          tagList: this.state.tagList.split(","),
         },
       }),
     };
@@ -90,7 +90,6 @@ class EditArticle extends Component {
           requestOptions
         )
           .then((res) => {
-           
             return res.json();
           })
           .then((res) => {

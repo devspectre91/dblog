@@ -6,43 +6,36 @@ class ProfileFeed extends Component {
     super(props);
     this.state = {
       articles: null,
-      breadcrumb:'published',
-      user:null
+      breadcrumb: "published",
+      user: null,
     };
   }
 
   async componentDidMount() {
-  
- 
-      await fetch(
-        `https://mighty-oasis-08080.herokuapp.com/api/articles/?author=${this.props.user.username}`
-      )
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          console.log(data.articles.length);
-          return data.articles;
-        })
-        .then((data) => {
-          let pages =
-            data.length % 10 === 0
-              ? Math.floor(data.length / 10)
-              : Math.floor(data.length / 10) + 1;
-          this.setState({
-            articles: data,
-            noOfPages: pages
-            
-          });
+    await fetch(
+      `https://mighty-oasis-08080.herokuapp.com/api/articles/?author=${this.props.user.username}`
+    )
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        console.log(data.articles.length);
+        return data.articles;
+      })
+      .then((data) => {
+        let pages =
+          data.length % 10 === 0
+            ? Math.floor(data.length / 10)
+            : Math.floor(data.length / 10) + 1;
+        this.setState({
+          articles: data,
+          noOfPages: pages,
         });
-
- 
-    
-  
+      });
   }
 
   handleClick = (e) => {
-   console.log(e.target)
+    console.log(e.target);
     if (e.target.dataset.id === "published") {
       fetch(
         `https://mighty-oasis-08080.herokuapp.com/api/articles/?author=${this.props.user.username}`
@@ -62,12 +55,10 @@ class ProfileFeed extends Component {
           this.setState({
             articles: data,
             noOfPages: pages,
-            breadcrumb:'published'
-            
+            breadcrumb: "published",
           });
         });
     } else if (e.target.dataset.id === "favorited") {
-     
       fetch(
         `https://mighty-oasis-08080.herokuapp.com/api/articles/?favorited=${this.props.user.username}`
       )
@@ -86,12 +77,10 @@ class ProfileFeed extends Component {
           this.setState({
             articles: data,
             noOfPages: pages,
-            breadcrumb:'favorited'
-            
+            breadcrumb: "favorited",
           });
         });
-    } 
-    
+    }
   };
 
   getPages = () => {
@@ -123,32 +112,39 @@ class ProfileFeed extends Component {
       <div className="container">
         <nav class="breadcrumb py-2 mt-4" aria-label="breadcrumbs">
           <ul>
-          
-              <li>
-                <div className={this.state.breadcrumb==='published'?'has-text-success mx-3 pointer-link':'has-text-dark mx-3 pointer-link'} >
-                  <span class="icon is-small">
-                    <i class="fas fa-book" aria-hidden="true"></i>
-                  </span>
-                  <span data-id="published" onClick={this.handleClick} >Published</span>
-                </div>
-              </li>
-          
+            <li>
+              <div
+                className={
+                  this.state.breadcrumb === "published"
+                    ? "has-text-success mx-3 pointer-link"
+                    : "has-text-dark mx-3 pointer-link"
+                }
+              >
+                <span class="icon is-small">
+                  <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <span data-id="published" onClick={this.handleClick}>
+                  Published
+                </span>
+              </div>
+            </li>
 
-        
-              <li>
-                <div className={this.state.breadcrumb==='favorited'?'has-text-success mx-3 pointer-link':'has-text-dark mx-3 pointer-link'} >
-                  <span class="icon is-small">
-                    <i class="fas fa-book" aria-hidden="true"></i>
-                  </span>
-                  <span data-id="favorited" onClick={this.handleClick}>
-                    Favourited
-                  </span>
-                </div>
-              </li>
-          
-             
-            
-     
+            <li>
+              <div
+                className={
+                  this.state.breadcrumb === "favorited"
+                    ? "has-text-success mx-3 pointer-link"
+                    : "has-text-dark mx-3 pointer-link"
+                }
+              >
+                <span class="icon is-small">
+                  <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <span data-id="favorited" onClick={this.handleClick}>
+                  Favourited
+                </span>
+              </div>
+            </li>
           </ul>
         </nav>
 
@@ -177,7 +173,10 @@ class ProfileFeed extends Component {
                           <span class="tag is-dark">
                             {article.createdAt.split("T")[0]}
                           </span>
-                          <Link to={`/profiles/${article.author.username}`} class="tag is-danger">
+                          <Link
+                            to={`/profiles/${article.author.username}`}
+                            class="tag is-danger"
+                          >
                             {article.author.username}
                           </Link>
                         </div>
@@ -201,7 +200,6 @@ class ProfileFeed extends Component {
                 <ul class="pagination-list">{this.getPages()}</ul>
               </nav> */}
             </div>{" "}
-          
           </div>
         ) : (
           <div className="articles-loading"> "Loading..."</div>

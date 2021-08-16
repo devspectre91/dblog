@@ -2,21 +2,22 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 
 class Home extends Component {
-
   componentDidMount() {
     if (this.props.userInfo) {
       this.props.history.push("/dashboard");
     }
   }
-  
+
   render() {
     return (
       <>
         <div className="hero is-dark">
           <div className="hero-body has-text-centered ">
             <div className="is-size-1 has-text-light has-text-weight-bold mt-6">
-              Welcome to {" "}
-              <span className="has-text-success-dark brand is-size-1">Dblog!</span>
+              Welcome to{" "}
+              <span className="has-text-success-dark brand is-size-1">
+                Dblog!
+              </span>
             </div>
             <div className="is-size-3 has-text-light">
               Browse articles by amazing authors or publish one.

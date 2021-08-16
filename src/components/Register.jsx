@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Link,  withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
     super(props);
-
 
     //state of register component
 
@@ -80,7 +79,7 @@ class Register extends Component {
     } else if (e.target.name === "username") {
       this.setState({
         username: e.target.value,
-        usernameError:""
+        usernameError: "",
       });
     } else {
       this.setState(
@@ -93,7 +92,6 @@ class Register extends Component {
       );
     }
   };
-
 
   //handling click on signup buttton
   //if there is no client side error, setting status to loading, then sending a fetch request
@@ -126,17 +124,19 @@ class Register extends Component {
             .then((res) => {
               console.log(res);
               if ("errors" in res) {
-                this.setState({
-                  emailError: res.errors.email,
-                  usernameError: res.errors.username,
-                  status:null
-                },
-                () => {
-                  this.props.history.push("/register");
-                });
+                this.setState(
+                  {
+                    emailError: res.errors.email,
+                    usernameError: res.errors.username,
+                    status: null,
+                  },
+                  () => {
+                    this.props.history.push("/register");
+                  }
+                );
               } else if ("user" in res) {
                 localStorage.setItem("userInfo", res.user.token);
-                   
+
                 this.setState(
                   {
                     emailError: "",
@@ -153,18 +153,21 @@ class Register extends Component {
       );
     }
   };
-   componentDidMount(){
-     if(this.props.userInfo){
+  componentDidMount() {
+    if (this.props.userInfo) {
       this.props.history.push("/dashboard");
-     }
-   }
+    }
+  }
 
   render() {
     return (
       <div className="columns is-centered py-0">
-    {/* checking if the status id loading or not */}
+        {/* checking if the status id loading or not */}
         {this.state.status === "loading" ? (
-         <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark"> "Creating User..."</div>
+          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
+            {" "}
+            "Creating User..."
+          </div>
         ) : (
           <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">
             <div className="title has-text-centered my-1">Sign Up</div>

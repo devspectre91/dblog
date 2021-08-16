@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Settings extends Component {
   constructor(props) {
@@ -12,27 +12,29 @@ class Settings extends Component {
       username: null,
       email: null,
       bio: null,
-      image:null,
+      image: null,
       password: "",
-      error:null
+      error: null,
     };
   }
-  componentDidMount(){
+  componentDidMount() {
     if (!this.props.userInfo) {
       this.props.history.push("/");
-    }else{
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.props.userInfo.token}`,
-      }
-    };
+    } else {
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.props.userInfo.token}`,
+        },
+      };
 
-    this.setState({
-        status:'loading'
-    },()=>{
-        fetch(
+      this.setState(
+        {
+          status: "loading",
+        },
+        () => {
+          fetch(
             "https://mighty-oasis-08080.herokuapp.com/api/user",
             requestOptions
           )
@@ -41,18 +43,19 @@ class Settings extends Component {
             })
             .then((res) => {
               console.log(res.user);
-              if(res.user){
-               this.setState({
-                status: null,
-                username: res.user.username,
-                email: res.user.email,
-                bio: res.user.bio,
-                image:res.user.image,
-             
-               })
+              if (res.user) {
+                this.setState({
+                  status: null,
+                  username: res.user.username,
+                  email: res.user.email,
+                  bio: res.user.bio,
+                  image: res.user.image,
+                });
               }
             });
-    })}
+        }
+      );
+    }
   }
   handleChange = (e) => {
     if (e.target.name === "email") {
@@ -78,74 +81,79 @@ class Settings extends Component {
     }
   };
 
-
   handleClick = (e) => {
-console.log(this.props.userInfo.token)
-      this.setState(
-        {
-          status: "loading",
-        },
-        () => {
-          const requestOptions = this.state.password?{
-            method: "PUT",
-            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${this.props.userInfo.token}` },
-            body: JSON.stringify({
-              user: {
-                username: this.state.username,
-                email: this.state.email,
-               password:this.state.password,
-                bio: this.state.bio,
-                image: this.state.image,
+    console.log(this.props.userInfo.token);
+    this.setState(
+      {
+        status: "loading",
+      },
+      () => {
+        const requestOptions = this.state.password
+          ? {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${this.props.userInfo.token}`,
               },
-            }),
-          }:{
-            method: "PUT",
-            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${this.props.userInfo.token}` },
-            body: JSON.stringify({
-              user: {
-                username: this.state.username,
-                email: this.state.email,
-                bio: this.state.bio,
-                image: this.state.image,
+              body: JSON.stringify({
+                user: {
+                  username: this.state.username,
+                  email: this.state.email,
+                  password: this.state.password,
+                  bio: this.state.bio,
+                  image: this.state.image,
+                },
+              }),
+            }
+          : {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${this.props.userInfo.token}`,
               },
-            }),
-          };
+              body: JSON.stringify({
+                user: {
+                  username: this.state.username,
+                  email: this.state.email,
+                  bio: this.state.bio,
+                  image: this.state.image,
+                },
+              }),
+            };
 
-          fetch(
-            "https://mighty-oasis-08080.herokuapp.com/api/user",
-            requestOptions
-          )
-            .then((res) => {
-              return res.json();
-            })
-            .then((res) => {
-              console.log(res);
-              if ("errors" in res) {
-                this.setState(
-                  {
-                    status: null,
-                  },
-                  () => {
-                    this.props.history.push("/settings");
-                  }
-                );
-              } else if ("user" in res) {
-                this.props.logIn(res.user);
-               
+        fetch(
+          "https://mighty-oasis-08080.herokuapp.com/api/user",
+          requestOptions
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res);
+            if ("errors" in res) {
+              this.setState(
+                {
+                  status: null,
+                },
+                () => {
+                  this.props.history.push("/settings");
+                }
+              );
+            } else if ("user" in res) {
+              this.props.logIn(res.user);
 
-                this.setState(
-                  {
-                    error: "",
-                  },
-                  () => {
-                    this.props.history.push(`/profiles/${res.user.username}`);
-                  }
-                );
-              }
-            });
-        }
-      );
-    
+              this.setState(
+                {
+                  error: "",
+                },
+                () => {
+                  this.props.history.push(`/profiles/${res.user.username}`);
+                }
+              );
+            }
+          });
+      }
+    );
   };
   render() {
     return (
@@ -166,7 +174,11 @@ console.log(this.props.userInfo.token)
                   className="input"
                   type="text"
                   name="image"
-                  value={this.state.image?this.state.image:this.props.userInfo.image}
+                  value={
+                    this.state.image
+                      ? this.state.image
+                      : this.props.userInfo.image
+                  }
                   onChange={this.handleChange}
                 />
                 <span className="icon is-small is-left">
@@ -201,7 +213,6 @@ console.log(this.props.userInfo.token)
                 <span className="icon is-small is-left">
                   <i className="fas fa-envelope"></i>
                 </span>
-             
               </p>
             </div>
             <div className="field">

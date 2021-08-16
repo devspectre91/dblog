@@ -1,112 +1,107 @@
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Freckle+Face&family=Slackey&family=Tourney:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Freckle+Face&family=Slackey&family=Tourney:wght@100&display=swap");
 
-.brand{
-    font-family: 'Slackey', cursive;
-    font-size: 2rem;
+.brand {
+  font-family: "Slackey", cursive;
+  font-size: 2rem;
 }
-.brand:hover{
-    letter-spacing: 2px;
-   
+.brand:hover {
+  letter-spacing: 2px;
 }
-a{
-    color: black;
-}
-
-.box{
-    position: relative;
-}
-.article-tag{
-position: absolute;
-bottom: -10px;
-left: 10px;
-}
-.read-more{
-    position: absolute;
-    right: 10px;
-    bottom:10px
-}
-.hearts{
-	position:absolute;
-	right:10px;
-	top:10px;
+a {
+  color: black;
 }
 
-#root{
-    min-height: 100vh;
+.box {
+  position: relative;
 }
-.footer{
+.article-tag {
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+}
+.read-more {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.hearts {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
 
-     background-color: #1C2128;
-    width: 100%;
+#root {
+  min-height: 100vh;
 }
-.articles-loading{
-    margin-bottom: 22rem;
+.footer {
+  background-color: #1c2128;
+  width: 100%;
+}
+.articles-loading {
+  margin-bottom: 22rem;
 }
 
-.feed-button{
-   margin: 3rem 0;
+.feed-button {
+  margin: 3rem 0;
 }
-.tag{
-	cursor: pointer;
+.tag {
+  cursor: pointer;
 }
-.tag-box{
-    min-height: 200px;
+.tag-box {
+  min-height: 200px;
 }
 
 /* Animated Circles CSS */
 
 .circles {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .circles li {
-	position: absolute;
-	display: block;
-	list-style: none;
+  position: absolute;
+  display: block;
+  list-style: none;
 
-	animation: animate 10s linear infinite;
-
+  animation: animate 10s linear infinite;
 }
-
-
 
 .circles li:nth-child(1) {
-	left: 40%;
-    top: 32vh;
-	width: 40px;
-	height: 40px;
-	animation-delay: 0s;
-	animation-duration: 10s;
-
+  left: 40%;
+  top: 32vh;
+  width: 40px;
+  height: 40px;
+  animation-delay: 0s;
+  animation-duration: 10s;
 }
 
-
-.pagination-link{
-    cursor: pointer;
+.pagination-link {
+  cursor: pointer;
 }
-
-
 
 @keyframes animate {
-	0% {
-		transform: translateY(0) rotate(50deg) ;
-		opacity: 0;
-	}
-	50% {
-		transform: translateX(20vh) rotate(50deg);
-		opacity: 1;
-	}
-	100% {
-		transform: translateX(40vh) rotate(50deg) ;
-		opacity: 0;
-	}
+  0% {
+    transform: translateY(0) rotate(50deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(20vh) rotate(50deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(40vh) rotate(50deg);
+    opacity: 0;
+  }
 }
 
-.pointer-link{
-	cursor: pointer;
+.pointer-link {
+  cursor: pointer;
+}
+
+.fa-trash:hover {
+  font-size: large;
 }

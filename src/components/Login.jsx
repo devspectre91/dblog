@@ -10,14 +10,14 @@ class Login extends Component {
     this.state = {
       status: null,
       email: "",
-     error:'' 
+      error: "",
     };
   }
   handleChange = (e) => {
     if (e.target.name === "email") {
       this.setState({
         email: e.target.value,
-        error:''
+        error: "",
       });
     } else {
       this.setState({
@@ -27,7 +27,7 @@ class Login extends Component {
   };
 
   handleClick = (e) => {
-    if (!this.state.error){
+    if (!this.state.error) {
       this.setState(
         {
           status: "loading",
@@ -56,8 +56,8 @@ class Login extends Component {
               if ("errors" in res) {
                 this.setState(
                   {
-                  error:`Either username or password ${res.errors['email or password']}` ,
-                  
+                    error: `Either username or password ${res.errors["email or password"]}`,
+
                     status: null,
                   },
                   () => {
@@ -65,7 +65,7 @@ class Login extends Component {
                   }
                 );
               } else if ("user" in res) {
-                console.log(res)
+                console.log(res);
                 localStorage.setItem("userInfo", JSON.stringify(res.user));
 
                 this.setState(
@@ -73,7 +73,8 @@ class Login extends Component {
                     emailError: "",
                     passwordError: "",
                   },
-                  () => {this.props.logIn(res.user)
+                  () => {
+                    this.props.logIn(res.user);
                     this.props.history.push("/dashboard");
                   }
                 );
@@ -83,9 +84,9 @@ class Login extends Component {
       );
     }
   };
-  componentDidMount(){
-    if(this.props.userInfo){
-     this.props.history.push("/dashboard");
+  componentDidMount() {
+    if (this.props.userInfo) {
+      this.props.history.push("/dashboard");
     }
   }
   render() {
@@ -106,8 +107,8 @@ class Login extends Component {
               </div>
             </Link>
             {this.state.error ? (
-                  <div className="has-text-danger">{this.state.error}</div>
-                ) : null}
+              <div className="has-text-danger">{this.state.error}</div>
+            ) : null}
             <div className="field">
               <p className="control has-icons-left has-icons-right">
                 <input
@@ -123,7 +124,6 @@ class Login extends Component {
                 <span className="icon is-small is-right">
                   <i className="fas fa-check"></i>
                 </span>
-              
               </p>
             </div>
             <div className="field">
@@ -138,7 +138,6 @@ class Login extends Component {
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
                 </span>
-               
               </p>
             </div>
             <div className="field">

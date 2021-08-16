@@ -57,23 +57,25 @@ class Header extends Component {
         {this.props.userInfo ? (
           <div className="navbar-end">
             <div className="navbar-item">
-            <Link to="/new" className="button is-dark mr-4">
-                  <i className="fas fa-feather-alt"></i>
-                </Link>
+              <Link to="/new" className="button is-dark mr-4">
+                <i className="fas fa-feather-alt"></i>
+              </Link>
             </div>
             <figure class="image is-48x48 mt-2 ">
-                    <img
-                      className="is-rounded"
-                      src={this.props.userInfo.image?this.props.userInfo.image:"https://static.productionready.io/images/smiley-cyrus.jpg"}
-                      alt="profile"
-                    />
-                  </figure>
+              <img
+                className="is-rounded"
+                src={
+                  this.props.userInfo.image
+                    ? this.props.userInfo.image
+                    : "https://static.productionready.io/images/smiley-cyrus.jpg"
+                }
+                alt="profile"
+              />
+            </figure>
             <div className="navbar-item  is-size-5 is-capitalized">
               <Link
                 className="has-text-weight-bold has-text-success-dark"
                 to={`/profiles/${this.props.userInfo.username}`}
-              
-            
               >
                 {" "}
                 {this.props.userInfo.username}

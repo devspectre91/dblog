@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class CreateArticle extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class CreateArticle extends Component {
       taglist: [],
       description: null,
       body: null,
-      title:null
+      title: null,
     };
   }
 
@@ -51,29 +51,31 @@ class CreateArticle extends Component {
           title: this.state.title,
           body: this.state.body,
           description: this.state.description,
-          tagList: this.state.taglist.split(','),
+          tagList: this.state.taglist.split(","),
         },
       }),
     };
 
-    this.setState({
-        status:'loading'
-    },()=>{
+    this.setState(
+      {
+        status: "loading",
+      },
+      () => {
         fetch(
-            "https://mighty-oasis-08080.herokuapp.com/api/articles",
-            requestOptions
-          )
-            .then((res) => {
-              return res.json();
-            })
-            .then((res) => {
-              console.log(res.article);
-              if(res.article){
-                this.props.history.push(`/articles/${res.article.slug}`);
-              }
-            });
-    })
-   
+          "https://mighty-oasis-08080.herokuapp.com/api/articles",
+          requestOptions
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res.article);
+            if (res.article) {
+              this.props.history.push(`/articles/${res.article.slug}`);
+            }
+          });
+      }
+    );
   };
 
   render() {
@@ -120,7 +122,6 @@ class CreateArticle extends Component {
                 <p class="control ">
                   <textarea
                     class="textarea p-3"
-                  
                     name="body"
                     placeholder="Article's Body"
                     value={this.state.body}

@@ -8,10 +8,11 @@ class Article extends Component {
       article: null,
       favorited: false,
       status: null,
-      cstatus: null,
+      commentStatus: false,
       comments: [],
-
+      likes: null,
       cbody: null,
+      error: false,
     };
   }
   async componentDidMount() {
@@ -36,6 +37,7 @@ class Article extends Component {
         this.setState({
           article: data.article,
           favorited: data.article.favorited,
+          likes: data.article.favoritesCount,
         });
       });
     await fetch(
@@ -48,6 +50,11 @@ class Article extends Component {
         if (data.comments.length !== 0) {
           this.setState({
             comments: data.comments,
+            commentStatus: true,
+          });
+        } else {
+          this.setState({
+            error: true,
           });
         }
       });
@@ -64,10 +71,12 @@ class Article extends Component {
     if (e.target.dataset.id === "heart") {
       this.setState(
         (prevValue) => {
-          return { favorited: !prevValue.favorited };
+          let count = prevValue.favorited
+            ? prevValue.likes - 1
+            : prevValue.likes + 1;
+          return { favorited: !prevValue.favorited, likes: count };
         },
         () => {
-          console.log(this.state.favorited);
           const requestOptions = {
             method: this.state.favorited ? "POST" : "DELETE",
             headers: {
@@ -91,10 +100,9 @@ class Article extends Component {
         }
       );
     } else if (e.target.dataset.id === "delete") {
-      console.log("deletedddddddd");
       this.setState(
         {
-          status: "loading",
+          status: "deleting",
         },
         () => {
           const requestOptions = {
@@ -115,37 +123,45 @@ class Article extends Component {
         }
       );
     } else if (e.target.dataset.id === "comment") {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.props.userInfo.token}`,
+      this.setState(
+        {
+          commentStatus: false,
         },
-        body: JSON.stringify({
-          comment: {
-            body: this.state.cbody,
-          },
-        }),
-      };
-      fetch(
-        `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}/comments`,
-        requestOptions
-      )
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          this.setState((prevValue) => {
-            return {
-              comments: prevValue.comments.concat(data.comment),
-              cstatus:'loaded'
-            };
-          });
-        });
+        () => {
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.props.userInfo.token}`,
+            },
+            body: JSON.stringify({
+              comment: {
+                body: this.state.cbody,
+              },
+            }),
+          };
+          fetch(
+            `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}/comments`,
+            requestOptions
+          )
+            .then((data) => {
+              return data.json();
+            })
+            .then((data) => {
+              this.setState((prevValue) => {
+                return {
+                  comments: prevValue.comments.concat(data.comment),
+                  commentStatus: true,
+                  cbody: "",
+                };
+              });
+            });
+        }
+      );
     } else if (e.target.dataset.id === "cdelete") {
       this.setState(
         {
-          cstatus: "loading",
+          commentStatus: false,
         },
         () => {
           const requestOptions = {
@@ -159,16 +175,24 @@ class Article extends Component {
             `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}/comments/${e.target.dataset.commentid}`,
             requestOptions
           ).then(() => {
-            this.setState(
-              {
-                cstatus: null,
-              },
-              () => {
-                this.props.history.push(
-                  `/articles/${this.props.match.params.slug}`
-                );
-              }
-            );
+            fetch(
+              `https://mighty-oasis-08080.herokuapp.com/api/articles/${this.props.match.params.slug}/comments`
+            )
+              .then((data) => {
+                return data.json();
+              })
+              .then((data) => {
+                if (data.comments.length !== 0) {
+                  this.setState({
+                    comments: data.comments,
+                    commentStatus: true,
+                  });
+                } else {
+                  this.setState({
+                    error: true,
+                  });
+                }
+              });
           });
         }
       );
@@ -177,9 +201,8 @@ class Article extends Component {
   render() {
     return (
       <>
-        {this.state.status === "loading" ? (
+        {this.state.status === "deleting" ? (
           <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
-            {" "}
             "Deleting Article..."
           </div>
         ) : (
@@ -189,7 +212,6 @@ class Article extends Component {
                 <div className="hero-body mx-6">
                   <div className="is-size-1">{this.state.article.title}</div>
                   <div className="subtitle has-text-success has-text-justified">
-                    {" "}
                     {this.state.article.description}
                   </div>
                   <div className="level">
@@ -197,13 +219,20 @@ class Article extends Component {
                       <figure class="image is-48x48 ">
                         <img
                           className="is-rounded"
-                          src={this.state.article.author.image}
+                          src={
+                            this.state.article.author.image
+                              ? this.state.article.author.image
+                              : "https://static.productionready.io/images/smiley-cyrus.jpg"
+                          }
                           alt="profile"
                         />
                       </figure>
-                      <span className="ml-4">
+                      <Link
+                        to={`/profiles/${this.state.article.author.username}`}
+                        className="ml-4"
+                      >
                         {this.state.article.author.username}
-                      </span>
+                      </Link>
                       <span className="ml-4">
                         {`${this.state.article.createdAt.split("T")[0]}`}
                       </span>
@@ -225,7 +254,7 @@ class Article extends Component {
                         </span>
                         <span className="is-size-6 mx-2">
                           {" "}
-                          {this.state.article.favoritesCount}
+                          {this.state.likes}
                         </span>
                       </div>
                     ) : (
@@ -263,7 +292,6 @@ class Article extends Component {
                 </div>
               ) : (
                 <div className="articles-loading mx-6 px-6 py-6 is-size-4">
-                  {" "}
                   "Loading.."
                 </div>
               )}
@@ -293,7 +321,7 @@ class Article extends Component {
                     </p>
                   </div>
                   <div class="field ">
-                    <p class="control level ">
+                    <p class="control level mb-1">
                       <div className="level-left"></div>
                       <button
                         class="button level-right is-success"
@@ -308,11 +336,11 @@ class Article extends Component {
               ) : (
                 ""
               )}
-              <div className="mx-6 py-6 comments">
-                {this.state.comments.length !== 0 ? (
+              <div className="mx-6 py-3 px-1 comments">
+                {this.state.commentStatus ? (
                   this.state.comments.map((comment) => {
                     return (
-                      <div className="comment my-4 columns">
+                      <div className="comment my-6 has-background-white columns mx-2">
                         <div className="column is-1 pl-5">
                           <figure class="image is-48x48 mr-2">
                             <img
@@ -326,46 +354,53 @@ class Article extends Component {
                             />
                           </figure>
                         </div>
-                        <div className="column is-11 py-2">
+                        <div className="column is-11  py-2">
                           <div className="level">
                             <div className="level-left">
-                              <div className="is-size-5 has-text-weight-bold is-capitalized">
+                              <div className="is-size-5 is-capitalized">
                                 {comment.author.username}{" "}
                                 <span className="is-size-6 has-text-info-dark has-text-weight-normal">{` #${
                                   comment.createdAt.split("T")[0]
                                 }`}</span>
                               </div>
                             </div>
-                            <div className="level-right">
-                              <span class="icon pointer-link is-small has-text-danger">
-                                <i
-                                  class="fas fa-trash"
-                                  data-commentid={comment.id}
-                                  data-id="cdelete"
-                                  onClick={this.handleClick}
-                                ></i>
-                              </span>
-                            </div>
+                            {this.props.userInfo ? (
+                              this.props.userInfo.username ===
+                              comment.author.username ? (
+                                <div className="level-right">
+                                  <span class="icon pointer-link is-small has-text-danger">
+                                    <i
+                                      class="fas fa-trash"
+                                      data-commentid={comment.id}
+                                      data-id="cdelete"
+                                      onClick={this.handleClick}
+                                    ></i>
+                                  </span>
+                                </div>
+                              ) : (
+                                ""
+                              )
+                            ) : (
+                              ""
+                            )}
                           </div>
-                          <div className="is-size-6 mt-2 has-text-weight-bold has-background-warning-light p-4">
+
+                          <div className="is-size-5 has-text-weight-bold ">
                             {comment.body}
                           </div>
                         </div>
                       </div>
                     );
                   })
+                ) : this.state.error ? (
+                  <div className="has-text-weight-bold subtitle px-2 py-4">
+                    No comments yet!
+                  </div>
                 ) : (
                   <div className="has-text-weight-bold subtitle px-2 py-4">
-                    No Articles Yet!
+                    Loading comments...
                   </div>
                 )}
-                {/* {!this.state.comments.length===0? (
-                  ""
-                ) : (
-                  <div className="has-text-weight-bold subtitle px-2 py-4">
-                    No comments Yet!
-                  </div>
-                )} */}
               </div>
             </div>
           </>

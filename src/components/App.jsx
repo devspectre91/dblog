@@ -11,12 +11,9 @@ import Article from "./Article";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import Settings from "./Settings";
-import NotFound from './NotFound'
+import NotFound from "./NotFound";
 import CreateArticle from "./CreateArticle";
 import EditArticle from "./EditArticle";
-
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -26,10 +23,8 @@ class App extends React.Component {
         ? JSON.parse(localStorage.getItem("userInfo"))
         : null,
       maxArticles: null,
- 
     };
   }
-
 
   logIn = (user) => {
     this.setState({
@@ -63,7 +58,11 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header userInfo={this.state.userInfo} logOut={this.logOut} updatePage={this.updatePage}  />
+        <Header
+          userInfo={this.state.userInfo}
+          logOut={this.logOut}
+          updatePage={this.updatePage}
+        />
 
         <Switch>
           <Route path="/login" exact>
@@ -87,13 +86,13 @@ class App extends React.Component {
           <Route
             path="/articles/:slug"
             render={(props) => (
-              <Article userInfo={this.state.userInfo} {...props}  exact/>
+              <Article userInfo={this.state.userInfo} {...props} exact />
             )}
           />
-            <Route
+          <Route
             path="/article/edit/:slug"
             render={(props) => (
-              <EditArticle userInfo={this.state.userInfo} {...props}  exact/>
+              <EditArticle userInfo={this.state.userInfo} {...props} exact />
             )}
           />
 
@@ -115,40 +114,33 @@ class App extends React.Component {
             render={(props) => (
               <Profile userInfo={this.state.userInfo} {...props} />
             )}
-         exact />
+            exact
+          />
           <Route
             path="/profiles/:username"
             render={(props) => (
               <Profile userInfo={this.state.userInfo} {...props} />
             )}
-         exact />
-        
-          
+            exact
+          />
+
           <Route path="/settings" exact>
             <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
           </Route>
 
           <Route path="/new" exact>
-            <CreateArticle
-            
-              userInfo={this.state.userInfo}
-            />
+            <CreateArticle userInfo={this.state.userInfo} />
           </Route>
-          
+
           <Route path="/" exact>
             <Home userInfo={this.state.userInfo} exact />
           </Route>
-         
+
           <Route component={NotFound} />
-            
-         
         </Switch>
       </>
     );
   }
-  
 }
-
-
 
 export default App;

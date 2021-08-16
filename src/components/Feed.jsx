@@ -384,18 +384,16 @@ class Feed extends Component {
                       <div className="button read-more is-small is-dark">
                         Read More
                       </div>
-                      
                     </Link>
                     <div className="hearts">
-                       
-                        <span className="">
-                          <i className="fas fa-heart"></i>
-                        </span>
-                        <span className="is-size-6 has-text-weight-bold mx-1">
-                          {" "}
-                          {article.favoritesCount}
-                        </span>
-                      </div>
+                      <span className="">
+                        <i className="fas fa-heart"></i>
+                      </span>
+                      <span className="is-size-6 has-text-weight-bold mx-1">
+                        {" "}
+                        {article.favoritesCount}
+                      </span>
+                    </div>
                   </div>
                 );
               })}
