@@ -175,8 +175,8 @@ class Profile extends Component {
             No User Found!
           </div>
         ) : (
-          <div className="has-text-info-dark mt-6 container title has-text-centered">
-            Loading...
+          <div className="has-text-success-dark mt-6 container title has-text-centered">
+            Loading  <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
           </div>
         )}
       </>

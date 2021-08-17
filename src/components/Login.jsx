@@ -94,9 +94,9 @@ class Login extends Component {
       <div className="columns is-centered py-5">
         {/* checking if the status id loading or not */}
         {this.state.status === "loading" ? (
-          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
+          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-success-dark">
             {" "}
-            "Logging in..."
+            Logging in <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
           </div>
         ) : (
           <div className="box m-6 py-5 pb-6 px-4 column is-half has-background-light">

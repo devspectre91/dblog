@@ -411,6 +411,7 @@ class Feed extends Component {
                 {this.state.tags ? (
                   <div className="tags">
                     {this.state.tags.map((tag) => {
+                      if(tag){
                       return (
                         <div
                           key={tag}
@@ -425,17 +426,17 @@ class Feed extends Component {
                           {" "}
                           {tag}
                         </div>
-                      );
+                      );}
                     })}
                   </div>
                 ) : (
-                  "Loading..."
+                  <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
                 )}
               </div>
             </div>
           </div>
         ) : (
-          <div className="articles-loading"> "Loading..."</div>
+          <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
         )}
       </div>
     );

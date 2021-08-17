@@ -202,8 +202,8 @@ class Article extends Component {
     return (
       <>
         {this.state.status === "deleting" ? (
-          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
-            "Deleting Article..."
+          <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-success-dark">
+            Deleting Article <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
           </div>
         ) : (
           <>
@@ -292,7 +292,7 @@ class Article extends Component {
                 </div>
               ) : (
                 <div className="articles-loading mx-6 px-6 py-6 is-size-4">
-                  "Loading.."
+                  Loading <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
                 </div>
               )}
             </div>
@@ -397,9 +397,7 @@ class Article extends Component {
                     No comments yet!
                   </div>
                 ) : (
-                  <div className="has-text-weight-bold subtitle px-2 py-4">
-                    Loading comments...
-                  </div>
+                  <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
                 )}
               </div>
             </div>

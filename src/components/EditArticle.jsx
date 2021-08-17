@@ -108,10 +108,7 @@ class EditArticle extends Component {
         <div className="columns is-centered py-0">
           {/* checking if the status id loading or not */}
           {this.state.status === "loading" ? (
-            <div className=" py-5 pb-6 px-4 column articles-loading is-half is-size-2 has-text-centered has-text-info-dark">
-              {" "}
-              "Getting Article info..."
-            </div>
+           <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
           ) : (
             <div className="box m-6 py-5 pb-6 px-4 column is-three-fifths has-background-light">
               <div className="title has-text-centered my-3 mb-4">

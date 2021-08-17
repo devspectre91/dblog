@@ -24,13 +24,13 @@ class Header extends Component {
   render() {
     return (
       <nav
-        className="navbar is-light px-6 py-1"
+        className="navbar is-light px-6 py-4 "
         role="navigation"
         aria-label="main navigation"
       >
         <div className="navbar-brand">
           <div className="navbar-item ">
-            {" "}
+            
             <Link to="/" className="has-text-dark brand">
               {" "}
               Dblog !

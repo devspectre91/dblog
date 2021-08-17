@@ -202,7 +202,7 @@ class ProfileFeed extends Component {
             </div>{" "}
           </div>
         ) : (
-          <div className="articles-loading"> "Loading..."</div>
+          <div className="lds-ellipsis "><div></div><div></div><div></div><div></div></div>
         )}
       </div>
     );
