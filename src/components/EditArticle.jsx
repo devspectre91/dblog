@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+
 
 class EditArticle extends Component {
   constructor(props) {
@@ -181,4 +181,4 @@ class EditArticle extends Component {
   }
 }
 
-export default withRouter(EditArticle);
+export default EditArticle;

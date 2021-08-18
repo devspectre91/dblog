@@ -83,12 +83,9 @@ class App extends React.Component {
               <Feed userInfo={this.state.userInfo}  {...props} />
             )}
           /> */}
-          <Route
-            path="/articles/:slug"
-            render={(props) => (
-              <Article userInfo={this.state.userInfo} {...props} exact />
-            )}
-          />
+          <Route path="/articles/:slug">
+            <Article userInfo={this.state.userInfo}  exact />
+          </Route>
           <Route
             path="/article/edit/:slug"
             render={(props) => (
