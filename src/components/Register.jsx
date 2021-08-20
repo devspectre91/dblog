@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Register extends Component {
   constructor(props) {
@@ -17,7 +20,7 @@ class Register extends Component {
       passwordError: "",
     };
   }
-
+  static contextType = UserContext
   //to validate email on client side
   validateEmail = (email) => {
     const re =
@@ -154,7 +157,8 @@ class Register extends Component {
     }
   };
   componentDidMount() {
-    if (this.props.userInfo) {
+    const userInfo = this.context
+    if (userInfo) {
       this.props.history.push("/dashboard");
     }
   }

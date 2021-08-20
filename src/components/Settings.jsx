@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Settings extends Component {
   constructor(props) {
@@ -17,15 +20,18 @@ class Settings extends Component {
       error: null,
     };
   }
+  static contextType = UserContext
+  
   componentDidMount() {
-    if (!this.props.userInfo) {
+    const userInfo = this.context
+    if (!userInfo) {
       this.props.history.push("/");
     } else {
       const requestOptions = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.props.userInfo.token}`,
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
@@ -82,7 +88,7 @@ class Settings extends Component {
   };
 
   handleClick = (e) => {
-    console.log(this.props.userInfo.token);
+    const userInfo = this.context
     this.setState(
       {
         status: "loading",
@@ -93,7 +99,7 @@ class Settings extends Component {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${this.props.userInfo.token}`,
+                Authorization: `Bearer ${userInfo.token}`,
               },
               body: JSON.stringify({
                 user: {
@@ -109,7 +115,7 @@ class Settings extends Component {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${this.props.userInfo.token}`,
+                Authorization: `Bearer ${userInfo.token}`,
               },
               body: JSON.stringify({
                 user: {
@@ -156,6 +162,7 @@ class Settings extends Component {
     );
   };
   render() {
+    const userInfo = this.context
     return (
       <div className="columns is-centered py-0">
         {/* checking if the status id loading or not */}
@@ -177,7 +184,7 @@ class Settings extends Component {
                   value={
                     this.state.image
                       ? this.state.image
-                      : this.props.userInfo.image
+                      : userInfo.image
                   }
                   onChange={this.handleChange}
                 />

@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Login from "./Login";
-
+import {UserProvider} from './UserContext';
 import Register from "./Register";
 import Header from "./Header";
 // import Footer from "./Footer";
@@ -60,8 +60,11 @@ class App extends React.Component {
     return (
       <>
         <ErrorBoundary>
+        <UserProvider value={this.state.userInfo}>
+   
+   
           <Header
-            userInfo={this.state.userInfo}
+           
             logOut={this.logOut}
             updatePage={this.updatePage}
           />
@@ -70,14 +73,14 @@ class App extends React.Component {
             <Route path="/login" exact>
               <div className="container">
                 <Login
-                  userInfo={this.state.userInfo}
+                 
                   logIn={this.logIn}
                 ></Login>
               </div>
             </Route>
             <Route path="/register" exact>
               <div className="container">
-                <Register userInfo={this.state.userInfo}></Register>
+                <Register></Register>
               </div>
             </Route>
 
@@ -89,57 +92,58 @@ class App extends React.Component {
             )}
           /> */}
             <Route path="/articles/:slug">
-              <Article userInfo={this.state.userInfo} exact />
+              <Article  exact />
             </Route>
             <Route
               path="/article/edit/:slug"
               render={(props) => (
-                <EditArticle userInfo={this.state.userInfo} {...props} exact />
+                <EditArticle  {...props} exact />
               )}
             />
 
             <Route path="/articles" exact>
               <Feed
                 maxArticles={this.state.maxArticles}
-                userInfo={this.state.userInfo}
+              
               />
             </Route>
 
             <Route path="/dashboard" exact>
               <Dashboard
                 maxArticles={this.state.maxArticles}
-                userInfo={this.state.userInfo}
+               
               />
             </Route>
             <Route
               path="/profiles"
               render={(props) => (
-                <Profile userInfo={this.state.userInfo} {...props} />
+                <Profile {...props} />
               )}
               exact
             />
             <Route
               path="/profiles/:username"
               render={(props) => (
-                <Profile userInfo={this.state.userInfo} {...props} />
+                <Profile  {...props} />
               )}
               exact
             />
 
             <Route path="/settings" exact>
-              <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
+              <Settings logIn={this.logIn} />
             </Route>
 
             <Route path="/new" exact>
-              <CreateArticle userInfo={this.state.userInfo} />
+              <CreateArticle />
             </Route>
 
             <Route path="/" exact>
-              <Home userInfo={this.state.userInfo} exact />
+              <Home  exact />
             </Route>
 
             <Route component={NotFound} />
           </Switch>
+          </UserProvider>
         </ErrorBoundary>
       </>
     );

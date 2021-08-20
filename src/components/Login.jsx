@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Login extends Component {
   constructor(props) {
@@ -13,6 +16,7 @@ class Login extends Component {
       error: "",
     };
   }
+  static contextType = UserContext
   handleChange = (e) => {
     if (e.target.name === "email") {
       this.setState({
@@ -85,7 +89,8 @@ class Login extends Component {
     }
   };
   componentDidMount() {
-    if (this.props.userInfo) {
+    const userInfo = this.context
+    if (userInfo) {
       this.props.history.push("/dashboard");
     }
   }

@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Home extends Component {
+  static contextType = UserContext
   componentDidMount() {
-    if (this.props.userInfo) {
+    const userInfo = this.context
+    if (userInfo) {
       this.props.history.push("/dashboard");
     }
   }

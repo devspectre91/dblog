@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import UserContext from "./UserContext";
+
 
 
 class EditArticle extends Component {
@@ -12,9 +14,10 @@ class EditArticle extends Component {
       title: null,
     };
   }
-
+  static contextType = UserContext
   componentDidMount() {
-    if (!this.props.userInfo) {
+    const userInfo = this.context
+    if (!userInfo) {
       this.props.history.push("/");
     } else {
       this.setState(
@@ -64,11 +67,12 @@ class EditArticle extends Component {
   };
 
   handleClick = () => {
+    const userInfo = this.context
     const requestOptions = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.props.userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({
         article: {

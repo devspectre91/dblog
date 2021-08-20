@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ProfileFeed from "./ProfileFeed";
 import { withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Profile extends Component {
   constructor(props) {
@@ -11,16 +14,16 @@ class Profile extends Component {
       following: false,
     };
   }
-
+  static contextType = UserContext
   componentDidMount() {
-    console.log(this.props.match.params.username);
+    const userInfo = this.context
 
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.props.userInfo
-          ? `Bearer ${this.props.userInfo.token}`
+        Authorization: userInfo
+          ? `Bearer ${userInfo.token}`
           : null,
       },
     };
@@ -77,6 +80,7 @@ class Profile extends Component {
   }
 
   handleClick = (e) => {
+    const userInfo = this.context
     if (e.target.dataset.id === "follow") {
       this.setState(
         {
@@ -87,7 +91,7 @@ class Profile extends Component {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${this.props.userInfo.token}`,
+              Authorization: `Bearer ${userInfo.token}`,
             },
           };
           fetch(
@@ -106,7 +110,7 @@ class Profile extends Component {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${this.props.userInfo.token}`,
+              Authorization: `Bearer ${userInfo.token}`,
             },
           };
           fetch(
@@ -118,6 +122,7 @@ class Profile extends Component {
     }
   };
   render() {
+    const userInfo = this.context
     return (
       <>
         {this.state.user ? (
@@ -141,8 +146,8 @@ class Profile extends Component {
                   {this.state.user.bio}
                 </div>
 
-                {this.props.userInfo &&
-                !(this.props.userInfo.username === this.state.user.username) ? (
+                {userInfo &&
+                !(userInfo.username === this.state.user.username) ? (
                   this.state.following ? (
                     <div
                       className="button"
@@ -167,7 +172,7 @@ class Profile extends Component {
             </div>
             <ProfileFeed
               user={this.state.user}
-              loggedInUser={this.props.userInfo}
+             
             />
           </>
         ) : this.state.error ? (

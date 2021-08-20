@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
+
 
 class ProfileFeed extends Component {
   constructor(props) {

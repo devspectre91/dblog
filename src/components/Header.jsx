@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "./UserContext";
+
 
 class Header extends Component {
+  
+  static contextType = UserContext
   componentDidMount() {
+
+   
     // // Get all "navbar-burger" elements
     // const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
     // // Check if there are any navbar burgers
@@ -23,6 +29,7 @@ class Header extends Component {
   
   }
   render() {
+    const userInfo = this.context
     return (
       <nav
         className="navbar is-light px-6 py-4 "
@@ -54,7 +61,7 @@ class Header extends Component {
             <Link to='/' className="navbar-item py-4">Home</Link>
           </div>
         </div> */}
-        {this.props.userInfo ? (
+        {userInfo ? (
           <div className="navbar-end">
             <div className="navbar-item">
               <Link to="/new" className="button is-dark mr-4">
@@ -65,8 +72,8 @@ class Header extends Component {
               <img
                 className="is-rounded"
                 src={
-                  this.props.userInfo.image
-                    ? this.props.userInfo.image
+                  userInfo.image
+                    ? userInfo.image
                     : "https://static.productionready.io/images/smiley-cyrus.jpg"
                 }
                 alt="profile"
@@ -75,10 +82,10 @@ class Header extends Component {
             <div className="navbar-item  is-size-5 is-capitalized">
               <Link
                 className="has-text-weight-bold has-text-success-dark"
-                to={`/profiles/${this.props.userInfo.username}`}
+                to={`/profiles/${userInfo.username}`}
               >
                 {" "}
-                {this.props.userInfo.username}
+                {userInfo.username}
               </Link>
             </div>
             <div className="navbar-item">

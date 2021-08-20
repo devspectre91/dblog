@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class CreateArticle extends Component {
   constructor(props) {
@@ -12,9 +15,11 @@ class CreateArticle extends Component {
       title: null,
     };
   }
+  static contextType = UserContext
 
   componentDidMount() {
-    if (!this.props.userInfo) {
+    const userInfo = this.context
+    if (!userInfo) {
       this.props.history.push("/");
     }
   }

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Article extends Component {
   constructor(props) {
@@ -15,13 +18,15 @@ class Article extends Component {
       error: false,
     };
   }
+  static contextType = UserContext
   async componentDidMount() {
+    const userInfo = this.context
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.props.userInfo
-          ? `Bearer ${this.props.userInfo.token}`
+        Authorization: userInfo
+          ? `Bearer ${userInfo.token}`
           : null,
       },
     };
@@ -60,6 +65,7 @@ class Article extends Component {
       });
   }
   handleChange = (e) => {
+   
     if (e.target.name === "cbody") {
       this.setState({
         cbody: e.target.value,
@@ -67,6 +73,7 @@ class Article extends Component {
     }
   };
   handleClick = (e) => {
+    const userInfo= this.context;
     console.log(e.target.dataset.id);
     if (e.target.dataset.id === "heart") {
       this.setState(
@@ -109,7 +116,7 @@ class Article extends Component {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${this.props.userInfo.token}`,
+              Authorization: `Bearer ${userInfo.token}`,
             },
           };
           fetch(
@@ -117,7 +124,7 @@ class Article extends Component {
             requestOptions
           ).then(() => {
             this.props.history.push(
-              `/profiles/${this.props.userInfo.username}`
+              `/profiles/${userInfo.username}`
             );
           });
         }
@@ -132,7 +139,7 @@ class Article extends Component {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${this.props.userInfo.token}`,
+              Authorization: `Bearer ${userInfo.token}`,
             },
             body: JSON.stringify({
               comment: {
@@ -168,7 +175,7 @@ class Article extends Component {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${this.props.userInfo.token}`,
+              Authorization: `Bearer ${userInfo.token}`,
             },
           };
           fetch(
@@ -199,6 +206,7 @@ class Article extends Component {
     }
   };
   render() {
+    const userInfo= this.context;
     return (
       <>
         {this.state.status === "deleting" ? (
@@ -237,7 +245,7 @@ class Article extends Component {
                         {`${this.state.article.createdAt.split("T")[0]}`}
                       </span>
                     </div>
-                    {this.props.userInfo ? (
+                    {userInfo ? (
                       <div className="level-right ">
                         <span
                           className={
@@ -267,8 +275,8 @@ class Article extends Component {
                         return <div className="tag is-danger">{tag}</div>;
                       })}
                     </div>
-                    {this.props.userInfo &&
-                    this.props.userInfo.username ===
+                    {userInfo &&
+                    userInfo.username ===
                       this.state.article.author.username ? (
                       <div className="level-right buttons">
                         <Link
@@ -307,7 +315,7 @@ class Article extends Component {
             </div>
             <div className="has-background-light  p-6">
               <div className="title mx-6">Comments</div>
-              {this.props.userInfo ? (
+              {userInfo ? (
                 <div className=" px-6 comment-form">
                   <div class="field">
                     <p class="control">
@@ -364,8 +372,8 @@ class Article extends Component {
                                 }`}</span>
                               </div>
                             </div>
-                            {this.props.userInfo ? (
-                              this.props.userInfo.username ===
+                            {userInfo ? (
+                              userInfo.username ===
                               comment.author.username ? (
                                 <div className="level-right">
                                   <span class="icon pointer-link is-small has-text-danger">

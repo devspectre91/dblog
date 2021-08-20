@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
+import UserContext from "./UserContext";
+
+
 
 class Feed extends Component {
   constructor(props) {
@@ -13,14 +16,15 @@ class Feed extends Component {
       breadcrumb: "feed",
     };
   }
-
+  static contextType = UserContext
   async componentDidMount() {
-    if (this.props.userInfo) {
+    const userInfo = this.context
+    if (userInfo) {
       const requestOptions = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.props.userInfo.token}`,
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       await fetch(
@@ -116,12 +120,13 @@ class Feed extends Component {
   }
 
   handleClick = (e) => {
+    const userInfo = this.context
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.props.userInfo
-          ? `Bearer ${this.props.userInfo.token}`
+        Authorization:userInfo
+          ? `Bearer ${userInfo.token}`
           : null,
       },
     };
@@ -177,7 +182,7 @@ class Feed extends Component {
           return data.json();
         })
         .then((data) => {
-          console.log(data.articles.length);
+        
           return data.articles;
         })
         .then((data) => {
@@ -277,11 +282,12 @@ class Feed extends Component {
     return pages;
   };
   render() {
+    const userInfo = this.context
     return (
       <div className="container">
         <nav class="breadcrumb py-2 mt-4" aria-label="breadcrumbs">
           <ul>
-            {this.props.userInfo ? (
+            {userInfo ? (
               <li>
                 <Link
                   className={
