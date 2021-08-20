@@ -14,6 +14,7 @@ import Settings from "./Settings";
 import NotFound from "./NotFound";
 import CreateArticle from "./CreateArticle";
 import EditArticle from "./EditArticle";
+import ErrorBoundary from "./ErrorBoundary";
 
 class App extends React.Component {
   constructor(props) {
@@ -58,83 +59,88 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header
-          userInfo={this.state.userInfo}
-          logOut={this.logOut}
-          updatePage={this.updatePage}
-        />
+        <ErrorBoundary>
+          <Header
+            userInfo={this.state.userInfo}
+            logOut={this.logOut}
+            updatePage={this.updatePage}
+          />
 
-        <Switch>
-          <Route path="/login" exact>
-            <div className="container">
-              <Login userInfo={this.state.userInfo} logIn={this.logIn}></Login>
-            </div>
-          </Route>
-          <Route path="/register" exact>
-            <div className="container">
-              <Register userInfo={this.state.userInfo}></Register>
-            </div>
-          </Route>
+          <Switch>
+            <Route path="/login" exact>
+              <div className="container">
+                <Login
+                  userInfo={this.state.userInfo}
+                  logIn={this.logIn}
+                ></Login>
+              </div>
+            </Route>
+            <Route path="/register" exact>
+              <div className="container">
+                <Register userInfo={this.state.userInfo}></Register>
+              </div>
+            </Route>
 
-          {/* passing props as render props */}
-          {/* <Route
+            {/* passing props as render props */}
+            {/* <Route
             path="/articles/tags/:tag"
             render={(props) => (
               <Feed userInfo={this.state.userInfo}  {...props} />
             )}
           /> */}
-          <Route path="/articles/:slug">
-            <Article userInfo={this.state.userInfo}  exact />
-          </Route>
-          <Route
-            path="/article/edit/:slug"
-            render={(props) => (
-              <EditArticle userInfo={this.state.userInfo} {...props} exact />
-            )}
-          />
-
-          <Route path="/articles" exact>
-            <Feed
-              maxArticles={this.state.maxArticles}
-              userInfo={this.state.userInfo}
+            <Route path="/articles/:slug">
+              <Article userInfo={this.state.userInfo} exact />
+            </Route>
+            <Route
+              path="/article/edit/:slug"
+              render={(props) => (
+                <EditArticle userInfo={this.state.userInfo} {...props} exact />
+              )}
             />
-          </Route>
 
-          <Route path="/dashboard" exact>
-            <Dashboard
-              maxArticles={this.state.maxArticles}
-              userInfo={this.state.userInfo}
+            <Route path="/articles" exact>
+              <Feed
+                maxArticles={this.state.maxArticles}
+                userInfo={this.state.userInfo}
+              />
+            </Route>
+
+            <Route path="/dashboard" exact>
+              <Dashboard
+                maxArticles={this.state.maxArticles}
+                userInfo={this.state.userInfo}
+              />
+            </Route>
+            <Route
+              path="/profiles"
+              render={(props) => (
+                <Profile userInfo={this.state.userInfo} {...props} />
+              )}
+              exact
             />
-          </Route>
-          <Route
-            path="/profiles"
-            render={(props) => (
-              <Profile userInfo={this.state.userInfo} {...props} />
-            )}
-            exact
-          />
-          <Route
-            path="/profiles/:username"
-            render={(props) => (
-              <Profile userInfo={this.state.userInfo} {...props} />
-            )}
-            exact
-          />
+            <Route
+              path="/profiles/:username"
+              render={(props) => (
+                <Profile userInfo={this.state.userInfo} {...props} />
+              )}
+              exact
+            />
 
-          <Route path="/settings" exact>
-            <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
-          </Route>
+            <Route path="/settings" exact>
+              <Settings userInfo={this.state.userInfo} logIn={this.logIn} />
+            </Route>
 
-          <Route path="/new" exact>
-            <CreateArticle userInfo={this.state.userInfo} />
-          </Route>
+            <Route path="/new" exact>
+              <CreateArticle userInfo={this.state.userInfo} />
+            </Route>
 
-          <Route path="/" exact>
-            <Home userInfo={this.state.userInfo} exact />
-          </Route>
+            <Route path="/" exact>
+              <Home userInfo={this.state.userInfo} exact />
+            </Route>
 
-          <Route component={NotFound} />
-        </Switch>
+            <Route component={NotFound} />
+          </Switch>
+        </ErrorBoundary>
       </>
     );
   }

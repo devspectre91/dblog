@@ -20,6 +20,7 @@ class Header extends Component {
     //     });
     //   });
     // }
+  
   }
   render() {
     return (
@@ -30,7 +31,6 @@ class Header extends Component {
       >
         <div className="navbar-brand">
           <div className="navbar-item ">
-            
             <Link to="/" className="has-text-dark brand">
               {" "}
               Dblog !
